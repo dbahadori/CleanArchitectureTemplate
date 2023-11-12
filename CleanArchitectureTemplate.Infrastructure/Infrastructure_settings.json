@@ -1,0 +1,18 @@
+{
+  "DatabaseType": "SqlServerTest",
+  "ConnectionStrings": {
+    "SqlServerTest": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CleanArchitectureTemplateDataBase;Integrated Security=True;MultipleActiveResultSets=True;",
+    "SqlServerProduction": "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=CleanArchitectureTemplateDataBase;Integrated Security=true;MultipleActiveResultSets=True;",
+    "MongoDB": "your_mongodb_connection_string"
+  },
+
+  "UseInMemoryDatabase": true,
+
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Key": "key",
+    "Issuer": "Issuer"
+  }
+
+
+}

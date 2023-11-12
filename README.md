@@ -1,0 +1,3 @@
+# Clean Architecture General Template
+
+
