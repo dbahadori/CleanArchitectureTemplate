@@ -17,7 +17,7 @@ namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Components
             try
             {
                 var sheet = ExtractSheetFromFile(file);
-                if (IsSheetInCorrectFormat(sheet))
+                if (!IsSheetInCorrectFormat(sheet))
                     throw new FileTemplateException($"Excel File Template is not correct. Check all rows of tables", Resources.ErrorMessages.FileTemplateError);
 
                 return GenerateOutputFromSheet(sheet);
