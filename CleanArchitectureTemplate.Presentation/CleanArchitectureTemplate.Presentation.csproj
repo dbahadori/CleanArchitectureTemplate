@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
@@ -37,7 +39,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CleanArchitectureTemplate.Application\CleanArchitectureTemplate.Application.csproj" />
-    <ProjectReference Include="..\CleanArchitectureTemplate.Constans\CleanArchitectureTemplate.Constans.csproj" />
+    <ProjectReference Include="..\CleanArchitectureTemplate.Constants\CleanArchitectureTemplate.Constants.csproj" />
     <ProjectReference Include="..\CleanArchitectureTemplate.Domain\CleanArchitectureTemplate.Domain.csproj" />
     <ProjectReference Include="..\CleanArchitectureTemplate.Infrastructure\CleanArchitectureTemplate.Infrastructure.csproj" />
     <ProjectReference Include="..\CleanArchitectureTemplate.Resources\CleanArchitectureTemplate.Resources.csproj" />

@@ -1,5 +1,5 @@
 ﻿using CleanArchitectureReferenceTemplate.Application.DTO.V1;
-using CleanArchitectureReferenceTemplate.Constans;
+using CleanArchitectureReferenceTemplate.Constants;
 using FluentValidation;
 
 namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DTO
