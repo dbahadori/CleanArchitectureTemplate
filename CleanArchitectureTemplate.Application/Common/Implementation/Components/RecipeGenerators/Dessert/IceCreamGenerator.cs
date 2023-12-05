@@ -5,12 +5,12 @@ using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeG
 
 namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Dessert
 {
-    internal class CakeDessertRecipeGenerator : IDessertRecipeGenerator
+    internal class IceCreamGenerator : IDessertRecipeGenerator
     {
         private readonly IRecipeBuilder _recipeBuilder;
         private readonly IIngredientBuilder _ingredientBuilder;
 
-        public CakeDessertRecipeGenerator(IRecipeBuilder recipeBuilder, IIngredientBuilder ingredientBuilder)
+        public IceCreamGenerator(IRecipeBuilder recipeBuilder, IIngredientBuilder ingredientBuilder)
         {
             _recipeBuilder = recipeBuilder;
             _ingredientBuilder = ingredientBuilder;
@@ -18,28 +18,28 @@ namespace CleanArchitectureTemplate.Application.Common.Implementation.Components
 
         public IRecipe Generate()
         {
-            var flour = _ingredientBuilder
+            var heavyCream = _ingredientBuilder
                 .WithId(Guid.NewGuid())
-                .WithDescription("All-purpose flour")
-                .WithName("Flour")
-                .WithQuantity(250)
-                .WithQuantityUnit(IngredientUnit.Gram)
+                .WithDescription("Heavy cream")
+                .WithName("Heavy Cream")
+                .WithQuantity(500)
+                .WithQuantityUnit(IngredientUnit.Milliliter)
                 .Build();
 
             var sugar = _ingredientBuilder
                 .WithId(Guid.NewGuid())
                 .WithDescription("Sugar")
                 .WithName("Sugar")
-                .WithQuantity(200)
+                .WithQuantity(150)
                 .WithQuantityUnit(IngredientUnit.Gram)
                 .Build();
 
-            var butter = _ingredientBuilder
+            var vanillaExtract = _ingredientBuilder
                 .WithId(Guid.NewGuid())
-                .WithDescription("Unsalted butter")
-                .WithName("Butter")
-                .WithQuantity(200)
-                .WithQuantityUnit(IngredientUnit.Gram)
+                .WithDescription("Vanilla extract")
+                .WithName("Vanilla Extract")
+                .WithQuantity(1)
+                .WithQuantityUnit(IngredientUnit.Teaspoon)
                 .Build();
 
             var eggs = _ingredientBuilder
@@ -50,25 +50,15 @@ namespace CleanArchitectureTemplate.Application.Common.Implementation.Components
                 .WithQuantityUnit(IngredientUnit.Piece)
                 .Build();
 
-            var bakingPowder = _ingredientBuilder
-                .WithId(Guid.NewGuid())
-                .WithDescription("Baking powder")
-                .WithName("Baking Powder")
-                .WithQuantity(1)
-                .WithQuantityUnit(IngredientUnit.Teaspoon)
-                .Build();
-
             var recipe = _recipeBuilder
-                .WithName("Classic Vanilla Cake")
+                .WithName("Vanilla Ice Cream")
                 .WithCategory(RecipeCategory.DESSERT)
-                .WithType(RecipeType.CAKE)
-                .WithInstructions("INSTRUCTION")
-                .WithDescription("A delicious classic vanilla cake.")
-                .AddIngredient(flour)
+                .WithType(RecipeType.ICE_CREAM)
+                .WithDescription("Creamy homemade vanilla ice cream.")
+                .AddIngredient(heavyCream)
                 .AddIngredient(sugar)
-                .AddIngredient(butter)
+                .AddIngredient(vanillaExtract)
                 .AddIngredient(eggs)
-                .AddIngredient(bakingPowder)
                 .WithCookingTime(TimeSpan.FromMinutes(15))
                 .Build();
 

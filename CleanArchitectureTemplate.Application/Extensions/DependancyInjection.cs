@@ -39,14 +39,14 @@ namespace CleanArchitectureTemplate.Application.Extensions
             services.AddKeyedScoped<IRecipeGeneratorFactory, DessertTypesRecipeGeneratorFactory>(RecipeCategory.DESSERT);
 
             // Add Recipe Generators
-            services.AddKeyedScoped<IBeverageRecipeGenerator, CoffeeBeverageRecipeGenerator>(RecipeType.COFFEE);
-            services.AddKeyedScoped<IBeverageRecipeGenerator, SmoothieBeverageRecipeGenerator>(RecipeType.SMOOTHIE);
-            services.AddKeyedScoped<IBreakfastRecipeGenerator, OmeletteBreakfastRecipeGenerator>(RecipeType.OMELETTE);
-            services.AddKeyedScoped<IBreakfastRecipeGenerator, PancakeBreakfastRecipeGenerator>(RecipeType.PANCAKE);
-            services.AddKeyedScoped<IDessertRecipeGenerator, CakeDessertRecipeGenerator>(RecipeType.CAKE);
-            services.AddKeyedScoped<IDessertRecipeGenerator, IceCreamDessertRecipeGenerator>(RecipeType.ICE_CREAM);
-            services.AddKeyedScoped<IMainCourseRecipeGenerator, Pasta_DishMainCourseRecipeGenerator>(RecipeType.PASTA_DISH);
-            services.AddKeyedScoped<IMainCourseRecipeGenerator, RoastMainCourseRecipeGenerator>(RecipeType.ROAST);
+            services.AddKeyedScoped<IBeverageRecipeGenerator, CoffeeGenerator>(RecipeType.COFFEE);
+            services.AddKeyedScoped<IBeverageRecipeGenerator, SmoothieGenerator>(RecipeType.SMOOTHIE);
+            services.AddKeyedScoped<IBreakfastRecipeGenerator, OmeletteGenerator>(RecipeType.OMELETTE);
+            services.AddKeyedScoped<IBreakfastRecipeGenerator, PancakeGenerator>(RecipeType.PANCAKE);
+            services.AddKeyedScoped<IDessertRecipeGenerator, CakeGenerator>(RecipeType.CAKE);
+            services.AddKeyedScoped<IDessertRecipeGenerator, IceCreamGenerator>(RecipeType.ICE_CREAM);
+            services.AddKeyedScoped<IMainCourseRecipeGenerator, Pasta_DishGenerator>(RecipeType.PASTA_DISH);
+            services.AddKeyedScoped<IMainCourseRecipeGenerator, RoastGenerator>(RecipeType.ROAST);
 
 
 

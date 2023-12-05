@@ -5,12 +5,12 @@ using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeG
 
 namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Breakfast
 {
-    internal class OmeletteBreakfastRecipeGenerator : IBreakfastRecipeGenerator
+    public class OmeletteGenerator : IBreakfastRecipeGenerator
     {
         private readonly IRecipeBuilder _recipeBuilder;
         private readonly IIngredientBuilder _ingredientBuilder;
 
-        public OmeletteBreakfastRecipeGenerator(IRecipeBuilder recipeBuilder, IIngredientBuilder ingredientBuilder)
+        public OmeletteGenerator(IRecipeBuilder recipeBuilder, IIngredientBuilder ingredientBuilder)
         {
             _recipeBuilder = recipeBuilder;
             _ingredientBuilder = ingredientBuilder;
