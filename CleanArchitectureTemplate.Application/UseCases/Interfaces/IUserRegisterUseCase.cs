@@ -1,17 +1,17 @@
-﻿using CleanArchitectureReferenceTemplate.Application.DTO.V1;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+﻿using CleanArchitectureTemplate.Application.DTO.V1;
+using CleanArchitectureTemplate.Domain.Interfaces;
+using CleanArchitectureTemplate.Domain.ValueObejects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces
+namespace CleanArchitectureTemplate.Application.UseCases.Interfaces
 {
     public interface IUserRegisterUseCase
     {
-        Task<OperationResult> RegisterAsync(UserRegisterInputMessage input);
+        Task<OperationResult> RegisterAsync(UserRegisterInputModel input);
 
     }
 }

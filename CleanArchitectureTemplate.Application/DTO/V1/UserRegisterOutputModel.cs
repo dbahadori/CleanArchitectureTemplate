@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.DTO.V1
+namespace CleanArchitectureTemplate.Application.DTO.V1
 {
-    public class UserRegisterOutputMessage
+    public class UserRegisterOutputModel
     {
         public required string Id { get; set; }
         public string? FullName { get; set; }

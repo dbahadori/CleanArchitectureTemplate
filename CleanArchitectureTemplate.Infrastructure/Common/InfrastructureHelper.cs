@@ -2,7 +2,7 @@
 using System.Reflection;
 
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Common
+namespace CleanArchitectureTemplate.Infrastructure.Common
 {
     public class InfrastructureHelper
     {

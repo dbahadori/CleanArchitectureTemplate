@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions;
-using CleanArchitectureReferenceTemplate.Application.DTO.V1;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Application.DTO.V1;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Resources;
 
-namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementations
+namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {
     public class UserRegisterInteractor : IUserRegisterUseCase
     {
@@ -24,16 +25,18 @@ namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementation
             _mapper = mapper;
         }
 
-        public async Task<OperationResult> RegisterAsync(UserRegisterInputMessage input)
+        public async Task<OperationResult> RegisterAsync(UserRegisterInputModel input)
         {
             try
             {
                 // Check Exist User with this email
-                var isEmailExistResult = await _unitOfWork.UserRepository.IsEmailExist(input.Email);
-                var isEmailExist = isEmailExistResult as OperationResult<bool>;
-                if (isEmailExist!.Data)
-                    return OperationResult.Failure(new ExistEmailException(input.Email, string.Format(Resources.ErrorMessages.ExistEmailBefore, input.Email)));
+                var isEmailDuplicated = await _unitOfWork.UserRepository.IsEmailExist(input.Email);
+                if (isEmailDuplicated)
+                {
+                    var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ExistEmailBefore, input.Email);
+                    return OperationResult.Failure(new ExistEmailException(defaultMessage, localizedMessage));
 
+                }
                 // Create User Model
                 var user = new User()
                 {
@@ -42,7 +45,7 @@ namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementation
                     FullName = input.FullName,
                     UserName = input.Email
                 };
-
+                user.SetHashedPassword(input.Password);
                 // Create User Profile
                 var userProfile = new UserProfile()
                 {
@@ -50,20 +53,22 @@ namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementation
                 };
 
                 user.AddProfile(userProfile);
-
-                var createUserResult = await _unitOfWork.UserRepository.CreateUserAsync(user, input.Password);
-                if (!createUserResult!.IsSuccessful)
-                    return createUserResult;
-
+                await _unitOfWork.UserRepository.CreateUserAsync(user);
                 await _unitOfWork.CommitAsync();
 
-                return createUserResult;
+                return OperationResult.Success();
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 _unitOfWork.Rollback();
-                throw;
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringRegistringUser, input.Email);
+                return OperationResult.Failure(
+                     new ExistEmailException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception)
+                    );
             }
         }
     }

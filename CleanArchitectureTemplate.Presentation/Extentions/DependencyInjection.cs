@@ -1,9 +1,9 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Repositories;
+﻿using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Extentions
+namespace CleanArchitectureTemplate.Presentation.Extentions
 {
     public static class DependencyInjection
     {

@@ -1,6 +1,6 @@
 ﻿
 
-namespace CleanArchitectureReferenceTemplate.Domain.Enums
+namespace CleanArchitectureTemplate.Domain.Enums
 {
     public enum GoalUnit
     {

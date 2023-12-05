@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using CleanArchitectureReferenceTemplate.Domain.Entities;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Context;
+using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Repositories.Entities
+namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
     public class UserProfileRepository : BaseRepository<UserProfileEntity, Guid>, IUserProfileRepository
     {

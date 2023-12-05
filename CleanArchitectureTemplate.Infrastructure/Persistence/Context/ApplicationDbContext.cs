@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using CleanArchitectureReferenceTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Entities;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Context
+namespace CleanArchitectureTemplate.Infrastructure.Persistence.Context
 {
     public class ApplicationDbContext : DbContext
     {

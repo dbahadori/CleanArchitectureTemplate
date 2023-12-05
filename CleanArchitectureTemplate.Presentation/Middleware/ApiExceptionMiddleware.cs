@@ -1,35 +1,40 @@
-﻿using CleanArchitectureReferenceTemplate.Presentation.Filters;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Net;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using CleanArchitectureReferenceTemplate.Infrastructure.Common.Exceptions;
-using System;
-using Microsoft.AspNetCore.Http;
-using CleanArchitectureReferenceTemplate.Presentation.Common.Exceptions;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Presentation.Common.Exceptions;
+using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using FluentValidation;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Middleware
+namespace CleanArchitectureTemplate.Presentation.Middleware
 {
     public class ApiExceptionMiddleware
     {
-        private readonly IDictionary<Type, Func<HttpContext, Exception, string, Task>> _exceptionHandlers;
+        private readonly IDictionary<Type, Func<HttpContext, CustomException, Task>> _exceptionHandlers;
         private readonly RequestDelegate _next;
+
         public ApiExceptionMiddleware(RequestDelegate next)
         {
-            _exceptionHandlers = new Dictionary<Type, Func<HttpContext, Exception, string, Task>>();
+            _exceptionHandlers = new Dictionary<Type, Func<HttpContext, CustomException, Task>>();
 
-            AddExceptionHandler<CustomValidationException>(HandleValidationException);
+            AddExceptionHandler<CustomValidationException>(HandleCustomValidationException);
             AddExceptionHandler<NotFoundException>(HandleNotFoundException);
             AddExceptionHandler<ExistEmailException>(HandleExistEmailException);
-            AddExceptionHandler<PasswordPatternException>(HandlePasswordPatternException);
+            AddExceptionHandler<PasswordPatternException>(HandlePatternException);
             AddExceptionHandler<ForbiddenException>(HandleForbiddenException);
+
+            // Configure default settings for JsonConvert
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+            };
 
             _next = next;
 
         }
 
-        private void AddExceptionHandler<TException>(Func<HttpContext, Exception, string, Task> handler) where TException : Exception
+        private void AddExceptionHandler<TException>(Func<HttpContext, CustomException, Task> handler) where TException : Exception
         {
             _exceptionHandlers.Add(typeof(TException), handler);
         }
@@ -41,6 +46,11 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Middleware
             {
                 await _next(httpContext);
             }
+            catch (ValidationException ex)
+            {
+                // Handle FluentValidation.ValidationException separately
+                await HandleValidationException(httpContext, ex);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(httpContext, ex);
@@ -51,27 +61,25 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Middleware
         {
 
             Type type = exception.GetType();
-            var title = "";
 
             if (_exceptionHandlers.ContainsKey(type))
             {
 
-                if (exception.Data.Contains("Title") && exception.Data["Title"] != null)
-                {
-                    title = (string)exception.Data["Title"]!;
-                }
-
-                await _exceptionHandlers[type].Invoke(httpContext, exception, title);
+                await _exceptionHandlers[type].Invoke(httpContext, (CustomException)exception);
                 return;
             }
 
             if (!httpContext.Response.HasStarted)
-            {
+            {   // log the exception
                 var details = new ProblemDetails()
                 {
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+                    Status = StatusCodes.Status500InternalServerError,
                     Title = "An unexpected error occurred.",
-                    Detail = exception.Message,
+                    Detail = null,
+                    Instance = httpContext.Request.Path,
+                    Extensions = null
+                  
 
                 };
                 httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
@@ -80,96 +88,176 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Middleware
             }
         }
 
-        private async Task HandleValidationException(HttpContext context, Exception ex, string title)
+        private async Task HandleValidationException(HttpContext context, ValidationException ex)
         {
-            var validationException = (CustomValidationException)ex;
 
-            var details = new ValidationProblemDetails(validationException.Errors)
+            var validationException = new CustomValidationException()
+                .WithParam(ex.Errors);
+            
+
+            var details = new ValidationProblemDetails()
+            
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+                Type = validationException.Type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Status = StatusCodes.Status400BadRequest,
+                Title = validationException.UserFriendlyMessage, // User-friendly title
+                Detail = validationException.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
             };
 
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            // Extract additional information from the exception
+
+            if (!string.IsNullOrEmpty(validationException.ErrorCode))
+            {
+                details.Extensions["error_code"] = validationException.ErrorCode;
+            }
+
+            if (validationException.Param != null && validationException.Param.Count > 0)
+            {
+                details.Extensions["param"] = validationException.Param;
+            }
+            details.Errors = null;
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
+        }
+        private async Task HandleCustomValidationException(HttpContext context, CustomException ex)
+        {
+            var details = new ValidationProblemDetails()
+
+            {
+                Type = ex.Type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Status = StatusCodes.Status400BadRequest,
+                Title = ex.UserFriendlyMessage, // User-friendly title
+                Detail = ex.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
+            };
+
+            // Extract additional information from the exception
+
+            if (!string.IsNullOrEmpty(ex.ErrorCode))
+            {
+                details.Extensions["error_code"] = ex.ErrorCode;
+            }
+
+            if (ex.Param != null && ex.Param.Count > 0)
+            {
+                details.Extensions["param"] = ex.Param;
+            }
+            details.Errors = null;
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
         }
 
-        private async Task HandleExistEmailException(HttpContext context, Exception ex, string title)
+        private async Task HandleExistEmailException(HttpContext context, CustomException ex)
         {
-            var details = new ProblemDetails()
+            var details = new ProblemDetails
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                Title = Resources.ErrorMessages.EmailUsedBefore,
-                Detail = ex.Message,
-                Extensions =
-                    {
-                        { "message", ex.Data["LocalizedMessage"] }
-                    }
+                Type = ex.Type ?? "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8",
+                Status = StatusCodes.Status409Conflict,
+                Title = ex.Message, // User-friendly title
+                Detail = ex.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
             };
-            context.Response.StatusCode = StatusCodes.Status409Conflict;
+
+            // Extract additional information from the exception
+            if (!string.IsNullOrEmpty(ex.ErrorCode))
+            {
+                details.Extensions["error_code"] = ex.ErrorCode;
+            }
+
+            if (ex.Param != null && ex.Param.Count > 0)
+            {
+                details.Extensions["param"] = ex.Param;
+            }
+            
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
 
         }
-        private async Task HandleNotFoundException(HttpContext context, Exception ex, string title)
+        private async Task HandleNotFoundException(HttpContext context, CustomException ex)
         {
-
-            var details = new ProblemDetails()
+            var details = new ProblemDetails
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                Title = !string.IsNullOrWhiteSpace(title) ? title : "The specified resource was not found.",
-                Detail = ex.Message,
-                Extensions =
-                    {
-                        { "userError", ex.Data["LocalizedMessage"] }
-                    }
-
+                Type = ex.Type ?? "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4",
+                Status = StatusCodes.Status404NotFound,
+                Title = ex.Message, // User-friendly title
+                Detail = ex.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
             };
-            context.Response.StatusCode = StatusCodes.Status404NotFound;
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
 
-        }
-
-        private async Task HandlePasswordPatternException(HttpContext context, Exception ex, string title)
-        {
-
-            var details = new ProblemDetails()
+            // Extract additional information from the exception
+            if (!string.IsNullOrEmpty(ex.ErrorCode))
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                Title = Resources.ErrorMessages.PasswordError,
-                Detail = ex.Message,
-                Extensions =
-                    {
-                        { "message", ex.Data["LocalizedMessage"] }
-                    }
-            };
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
+                details.Extensions["error_code"] = ex.ErrorCode;
+            }
 
-        }
-
-        private async Task HandleForbiddenException(HttpContext context, Exception ex, string title)
-        {
-
-            var details = new ProblemDetails()
+            if (ex.Param != null && ex.Param.Count > 0)
             {
-                Type = "",
-                Title = !string.IsNullOrWhiteSpace(title) ? title : "Forbidden",
-                Detail = ex.Message,
-                Extensions =
-                    {
-                        { "userError", ex.Data["LocalizedMessage"] }
-                    }
-
-            };
-            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                details.Extensions["param"] = ex.Param;
+            }
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
 
         }
 
+        private async Task HandlePatternException(HttpContext context, CustomException ex)
+        {
+
+            var details = new ProblemDetails
+            {
+                Type = ex.Type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Status = StatusCodes.Status400BadRequest,
+                Title = ex.Message, // User-friendly title
+                Detail = ex.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
+            };
+
+            // Extract additional information from the exception
+            if (!string.IsNullOrEmpty(ex.ErrorCode))
+            {
+                details.Extensions["error_code"] = ex.ErrorCode;
+            }
+
+            if (ex.Param != null && ex.Param.Count > 0)
+            {
+                details.Extensions["param"] = ex.Param;
+            }
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
+
+        }
+
+        private async Task HandleForbiddenException(HttpContext context, CustomException ex)
+        {
+            var details = new ProblemDetails
+            {
+                Type = ex.Type ?? "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3",
+                Status = StatusCodes.Status403Forbidden,
+                Title = ex.Message, // User-friendly title
+                Detail = ex.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
+            };
+
+            // Extract additional information from the exception
+            if (!string.IsNullOrEmpty(ex.ErrorCode))
+            {
+                details.Extensions["error_code"] = ex.ErrorCode;
+            }
+
+            if (ex.Param != null && ex.Param.Count > 0)
+            {
+                details.Extensions["param"] = ex.Param;
+            }
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
+
+        }
 
     }
 }

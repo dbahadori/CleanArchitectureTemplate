@@ -1,19 +1,54 @@
-﻿namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Exceptions;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
 
-public class PasswordNotCorrectException : Exception
+namespace CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
+
+public class PasswordNotCorrectException : CustomException
 {
+
     public PasswordNotCorrectException()
-        : base()
+    : base(string.Empty, null)
     {
     }
 
-    public PasswordNotCorrectException(string message, Exception innerException)
-        : base(message, innerException)
+    public PasswordNotCorrectException WithUserFriendlyMessage(string userFriendlyMessage)
     {
+        UserFriendlyMessage = userFriendlyMessage;
+        return this;
     }
 
-    public PasswordNotCorrectException(string email)
-        : base($"Password not correct for user : {email}")
+    public PasswordNotCorrectException WithDeveloperDetail(string developerDetail)
     {
+        DeveloperDetail = developerDetail;
+        return this;
+    }
+
+    public PasswordNotCorrectException WithType(string type)
+    {
+        Type = type;
+        return this;
+    }
+
+    public PasswordNotCorrectException WithErrorCode(string errorCode)
+    {
+        ErrorCode = errorCode;
+        return this;
+    }
+
+    public PasswordNotCorrectException WithInnerCustomException(Exception innerCustomException)
+    {
+        InnerCustomException = innerCustomException;
+        return this;
+    }
+
+    public PasswordNotCorrectException WithParam(IDictionary<string, string[]> param)
+    {
+        Param = param;
+        return this;
+    }
+
+    public PasswordNotCorrectException(string email, string userFriendlyMessage)
+        : base(userFriendlyMessage)
+    {
+        DeveloperDetail = $"Password not correct for user : {email}";
     }
 }

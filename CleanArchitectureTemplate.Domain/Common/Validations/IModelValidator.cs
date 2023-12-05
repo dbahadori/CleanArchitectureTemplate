@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Common.Validations
+namespace CleanArchitectureTemplate.Domain.Common.Validations
 {
     public interface IModelValidator
     {

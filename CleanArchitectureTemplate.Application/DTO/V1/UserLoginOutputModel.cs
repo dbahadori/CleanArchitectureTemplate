@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.DTO.V1
+namespace CleanArchitectureTemplate.Application.DTO.V1
 {
-    public class UserLoginOutputMessage
+    public class UserLoginOutputModel
     {
         public required string Token { get; set; }
         public string? Email { get; set; }

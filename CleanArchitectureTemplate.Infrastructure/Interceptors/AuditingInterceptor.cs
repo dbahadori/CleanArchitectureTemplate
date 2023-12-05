@@ -1,10 +1,10 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces;
+﻿using CleanArchitectureTemplate.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.Common.Interfaces;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Interceptors
+namespace CleanArchitectureTemplate.Infrastructure.Interceptors
 {
     internal class AuditingInterceptor : SaveChangesInterceptor
     {

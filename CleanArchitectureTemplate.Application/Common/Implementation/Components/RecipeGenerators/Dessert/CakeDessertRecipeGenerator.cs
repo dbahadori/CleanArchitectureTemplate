@@ -1,9 +1,9 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Models;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Builders;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces.Models;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Components.RecipeGenerators.Dessert
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Dessert
 {
     internal class CakeDessertRecipeGenerator : IDessertRecipeGenerator
     {
@@ -62,12 +62,14 @@ namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.C
                 .WithName("Classic Vanilla Cake")
                 .WithCategory(RecipeCategory.DESSERT)
                 .WithType(RecipeType.CAKE)
+                .WithInstructions("INSTRUCTION")
                 .WithDescription("A delicious classic vanilla cake.")
                 .AddIngredient(flour)
                 .AddIngredient(sugar)
                 .AddIngredient(butter)
                 .AddIngredient(eggs)
                 .AddIngredient(bakingPowder)
+                .WithCookingTime(TimeSpan.FromMinutes(15))
                 .Build();
 
             return recipe;

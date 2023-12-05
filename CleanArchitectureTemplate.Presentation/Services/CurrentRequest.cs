@@ -1,7 +1,7 @@
 ﻿using Azure.Core;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.Common.Interfaces;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Services
+namespace CleanArchitectureTemplate.Presentation.Services
 {
     public class CurrentRequest : ICurrentRequest
     {

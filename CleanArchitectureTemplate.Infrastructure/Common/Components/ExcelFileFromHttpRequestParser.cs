@@ -1,15 +1,16 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.DTO.V1.Admin;
-using CleanArchitectureReferenceTemplate.Infrastructure.Common.Exceptions;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.DTO.V1.Admin;
+using CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
+using CleanArchitectureTemplate.Resources;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using System.Text;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Components
+namespace CleanArchitectureTemplate.Infrastructure.Common.Components
 {
     public class ExcelFileFromHttpRequestParser : IHttpFileParser
     {
-        public IEnumerable<FileContentOutput> Parse(IFormFile file)
+        public IEnumerable<FileContentOutputModel> Parse(IFormFile file)
         {
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -18,14 +19,18 @@ namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Components
             {
                 var sheet = ExtractSheetFromFile(file);
                 if (!IsSheetInCorrectFormat(sheet))
-                    throw new FileTemplateException($"Excel File Template is not correct. Check all rows of tables", Resources.ErrorMessages.FileTemplateError);
+                    throw new FileTemplateException()
+                        .WithUserFriendlyMessage("")
+                        .WithDeveloperDetail(string.Format($"Excel File Template is not correct. Check all rows of tables", ErrorMessages.FileTemplateError));
 
                 return GenerateOutputFromSheet(sheet);
 
             }
             catch (Exception)
             {
-                throw new FileTemplateException($"Excel File Template is not correct. Check all rows of tables", Resources.ErrorMessages.FileTemplateError);
+                throw new FileTemplateException()
+                        .WithUserFriendlyMessage("")
+                        .WithDeveloperDetail(string.Format($"Excel File Template is not correct. Check all rows of tables", ErrorMessages.FileTemplateError));
             }
 
         }
@@ -71,13 +76,13 @@ namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Components
             else return true;
 
         }
-        private IEnumerable<FileContentOutput> GenerateOutputFromSheet(Dictionary<int, List<Tuple<int, object>>> sheet) 
+        private IEnumerable<FileContentOutputModel> GenerateOutputFromSheet(Dictionary<int, List<Tuple<int, object>>> sheet)
         {
             // remove header
             var content = sheet.Values.ToList();
             content.RemoveAt(0);
 
-            var outputModel = content.Select(content => new FileContentOutput()
+            var outputModel = content.Select(content => new FileContentOutputModel()
             {
                 Instructions = content[0].Item2?.ToString()!
 

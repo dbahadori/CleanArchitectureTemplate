@@ -5,9 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.Services.Utilities
+namespace CleanArchitectureTemplate.Domain.Common.Services.Utilities
 {
-    public static class UtilityService
+    public static class DomainUtilityService
     {
         public static string CreateSHA512(string plainText)
         {

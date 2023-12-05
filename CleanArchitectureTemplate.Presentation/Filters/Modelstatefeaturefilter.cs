@@ -1,8 +1,10 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions;
+﻿using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Net;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Filters
+namespace CleanArchitectureTemplate.Presentation.Filters
 {
     public class Modelstatefeaturefilter : IAsyncActionFilter
     {
@@ -25,7 +27,10 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Filters
                     }
                 }
 
-                throw new CustomValidationException(validationFailures);
+                throw new CustomValidationException()
+                    .WithUserFriendlyMessage("the format of request message is not correct")
+                    .WithDeveloperDetail("The submitted data is not in the expected format. Please check your input.");
+                
             }
             var executedContext = await next();
 

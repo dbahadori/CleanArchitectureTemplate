@@ -1,6 +1,6 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities;
+﻿using CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories
+namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {

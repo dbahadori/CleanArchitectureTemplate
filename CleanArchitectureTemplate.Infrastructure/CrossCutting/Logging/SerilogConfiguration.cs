@@ -2,10 +2,10 @@
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole;
 using Serilog.Sinks.File;
-using CleanArchitectureReferenceTemplate.Infrastructure.Common;
+using CleanArchitectureTemplate.Infrastructure.Common;
 using Microsoft.Extensions.Configuration;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Logging
+namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Logging
 {
     public class SerilogConfiguration : ILoggingConfiguration
     {

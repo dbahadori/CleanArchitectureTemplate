@@ -1,24 +1,24 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
+﻿using CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Factories;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.Services.Implementations;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Builders;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Builders;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Implementations;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Application.Common.Implementation.Factories;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Application.Services.Implementations;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
+using CleanArchitectureTemplate.Application.Common.Implementation.Builders;
+using CleanArchitectureTemplate.Application.UseCases.Implementations;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using Microsoft.Extensions.Options;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Components.RecipeGenerators.Beverage;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Components.RecipeGenerators.Breakfast;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Components.RecipeGenerators.Dessert;
+using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Beverage;
+using CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Breakfast;
+using CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Dessert;
 using AutoMapper;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Components.RecipeGenerators.MainCourse;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+using CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.MainCourse;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
 
-namespace CleanArchitectureReferenceTemplate.Application.Extensions
+namespace CleanArchitectureTemplate.Application.Extensions
 {
     public static class DependancyInjection
     {
@@ -54,7 +54,7 @@ namespace CleanArchitectureReferenceTemplate.Application.Extensions
         }
         public static IServiceCollection AddFactoryProviders(this IServiceCollection services)
         {
-            services.AddSingleton<IRecipeGeneratorFactoryProvider, RecipeGeneratorFactoryProvider>();
+            services.AddScoped<IRecipeGeneratorFactoryProvider, RecipeGeneratorFactoryProvider>();
 
             return services;
         }
@@ -69,6 +69,7 @@ namespace CleanArchitectureReferenceTemplate.Application.Extensions
         {
             services.AddScoped<IUserRegisterUseCase, UserRegisterInteractor>();
             services.AddScoped<IUserLoginUseCase, UserLoginInteractor>();
+            services.AddScoped<ICreateRecipeUseCase, CreateRecipeInteractor>();
 
             return services;
         }

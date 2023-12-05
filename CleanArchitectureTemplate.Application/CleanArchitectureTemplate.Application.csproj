@@ -40,4 +40,8 @@
     <ProjectReference Include="..\CleanArchitectureTemplate.Resources\CleanArchitectureTemplate.Resources.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Utilities\" />
+  </ItemGroup>
+
 </Project>

@@ -1,16 +1,48 @@
-﻿namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Exceptions;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
 
-public class FileSizeException : Exception
+namespace CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
+
+public class FileSizeException : CustomException
 {
+
     public FileSizeException()
-        : base()
+        : base(string.Empty, null)
     {
     }
 
-    public FileSizeException(string message, string localizedMessage)
-        : base(message)
+    public FileSizeException WithUserFriendlyMessage(string userFriendlyMessage)
     {
-        Data["LocalizedMessage"] = localizedMessage;
+        UserFriendlyMessage = userFriendlyMessage;
+        return this;
+    }
 
+    public FileSizeException WithDeveloperDetail(string developerDetail)
+    {
+        DeveloperDetail = developerDetail;
+        return this;
+    }
+
+    public FileSizeException WithType(string type)
+    {
+        Type = type;
+        return this;
+    }
+
+    public FileSizeException WithErrorCode(string errorCode)
+    {
+        ErrorCode = errorCode;
+        return this;
+    }
+
+    public FileSizeException WithInnerCustomException(Exception innerCustomException)
+    {
+        InnerCustomException = innerCustomException;
+        return this;
+    }
+
+    public FileSizeException WithParam(IDictionary<string, string[]> param)
+    {
+        Param = param;
+        return this;
     }
 }

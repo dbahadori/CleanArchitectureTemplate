@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.ValueObejects
+namespace CleanArchitectureTemplate.Domain.ValueObejects
 {
     public class BaseServiceResult
     {
         public bool IsSuccess { get; set; } = false;
-        public string? Message { get; set; }
+        public  Exception? Exception { get; set; }
     }
 }

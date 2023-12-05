@@ -1,8 +1,8 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Factories
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Factories
 {
     public class RecipeGeneratorFactoryProvider : IRecipeGeneratorFactoryProvider
     {

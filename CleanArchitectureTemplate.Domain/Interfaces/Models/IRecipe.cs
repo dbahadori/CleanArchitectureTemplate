@@ -1,12 +1,12 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Models;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Interfaces.Models
+namespace CleanArchitectureTemplate.Domain.Interfaces.Models
 {
     public interface IRecipe
     {

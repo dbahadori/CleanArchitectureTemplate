@@ -1,10 +1,10 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Builders;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 using Microsoft.Extensions.DependencyInjection;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Factories
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Factories
 {
     public class BreakfastTypesRecipeGeneratorFactory : IRecipeGeneratorFactory
     {

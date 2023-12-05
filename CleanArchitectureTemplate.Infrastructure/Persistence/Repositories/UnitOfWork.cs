@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Context;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Repositories.Entities;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Repositories
+namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {

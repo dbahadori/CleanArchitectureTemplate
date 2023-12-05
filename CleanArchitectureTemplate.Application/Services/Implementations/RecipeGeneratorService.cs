@@ -1,12 +1,12 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Components;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Models;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Components;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces.Models;
 
 
-namespace CleanArchitectureReferenceTemplate.Application.Services.Implementations
+namespace CleanArchitectureTemplate.Application.Services.Implementations
 {
     public class RecipeGeneratorService : IRecipeGeneratorService
     {

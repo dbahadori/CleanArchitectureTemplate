@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitectureReferenceTemplate.Domain
+namespace CleanArchitectureTemplate.Domain
 {
     public static class ConfigureServices
     {

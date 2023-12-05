@@ -1,13 +1,16 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.DTO.V1;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+﻿using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.DTO.V1;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Resources;
+using System;
 
-namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementations
+namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {
     public class UserLoginInteractor : IUserLoginUseCase
     {
@@ -24,24 +27,41 @@ namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<OperationResult> LoginAsync(UserLoginInputMessage input)
+        public async Task<OperationResult> LoginAsync(UserLoginInputModel input)
         {
             var authenticationResult = await _authenticationService.AuthenticateUserAsync(input.Email, input.Password!);
 
             // check user is Authenticated
             if (!authenticationResult.IsUserAuthenticated)
             {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.UserWithEmailNotFound, input.Email);
                 if (authenticationResult.AuthenticatedUser == null)
-                    return OperationResult.Failure(new NotFoundUserException(string.Format(Resources.ErrorMessages.UserNotFound, input.Email)));
-
-                return OperationResult.Failure(new NotFoundUserException(string.Format(Resources.ErrorMessages.PasswordNotCorrect, input.Email)));
+                {
+                    return OperationResult.Failure(
+                        new NotFoundUserException()
+                        .WithUserFriendlyMessage(localizedMessage)
+                        .WithDeveloperDetail(defaultMessage));
+                }
+                (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.PasswordNotCorrect, input.Email);
+                return OperationResult.Failure(
+                    new PasswordNotCorrectException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage));
             }
 
 
             // Create JWT Token for user
             var tokenResult = await _tokenService.GenerateTokenAsync(authenticationResult.AuthenticatedUser!);
             if (!tokenResult.IsSuccess)
-                return OperationResult.Failure(new Exception(string.Format(Resources.ErrorMessages.GenerateTokenError, Resources.ErrorMessages.ConfigFileIsNull)));
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.GenerateTokenError);
+                return OperationResult.Failure(
+                    new TokenGenerationException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(tokenResult.Exception));
+
+            }
 
             var authenticatedUser = authenticationResult.AuthenticatedUser;
 
@@ -56,29 +76,33 @@ namespace CleanArchitectureReferenceTemplate.Application.UseCases.Implementation
 
 
             // Update or Add
-            if (authenticatedUser!.HasSession(Session)) 
-                authenticatedUser.UpdateSession(Session);
-            else
+            if (!authenticatedUser!.HasSession(Session))
                 authenticatedUser.AddSessions(Session);
+            else
+                authenticatedUser.UpdateSession(Session);
 
             try
             {
-                 _unitOfWork.UserRepository.Update(authenticatedUser);
-                //await _userRepository.SaveAsync();
-                //_unitOfWork.UserRepository.Update(authenticatedUser);
-                //await _unitOfWork.CommitAsync();
-                var r=await _unitOfWork.UserRepository.SaveAsync(); 
-                return OperationResult<UserLoginOutputMessage>.Success(new UserLoginOutputMessage()
+                _unitOfWork.UserRepository.Update(authenticatedUser);
+                await _unitOfWork.CommitAsync();
+               // var r = await _unitOfWork.UserRepository.SaveAsync();
+                return OperationResult<UserLoginOutputModel>.Success(new UserLoginOutputModel()
                 {
                     Token = tokenResult.Token!,
                     Email = authenticatedUser.Email,
                     FullName = authenticatedUser.FullName,
                 });
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 _unitOfWork.Rollback();
-                throw;
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringUserLogin, input.Email);
+                return OperationResult.Failure(
+                    new ExistEmailException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception)
+                    );
             }
         }
     }

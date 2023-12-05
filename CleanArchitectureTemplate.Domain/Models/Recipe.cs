@@ -1,8 +1,8 @@
-using CleanArchitectureReferenceTemplate.Domain.Common.Validations;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Models;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Common.Validations;
+using CleanArchitectureTemplate.Domain.Interfaces.Models;
+using CleanArchitectureTemplate.Domain.Enums;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Models
 {
     public class Recipe: IRecipe
     {
@@ -37,7 +37,6 @@ namespace CleanArchitectureReferenceTemplate.Domain.Models
         }
         public Recipe AddIngredients(IList<Ingredient> ingredients)
         {
-            _modelValidator.ValidateAndThrow(ingredients);
             foreach (var ingredient in ingredients)
                 this.AddIngredient(ingredient);
             return this;

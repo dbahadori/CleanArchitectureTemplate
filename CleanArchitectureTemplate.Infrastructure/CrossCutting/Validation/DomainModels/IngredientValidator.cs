@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using CleanArchitectureReferenceTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Validation.DomainModels
+namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DomainModels
 {
 
     public class IngredientValidator : AbstractValidator<Ingredient>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.ValueObejects
+namespace CleanArchitectureTemplate.Domain.ValueObejects
 {
     public class TokenServiceResult : BaseServiceResult
     {

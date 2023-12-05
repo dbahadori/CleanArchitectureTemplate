@@ -1,7 +1,7 @@
-﻿using CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces;
+﻿using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Controllers.V1.Common
+namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common
 {
     // Specify the base (or current) API route to:
     // - Keep the existing route serving a default version (backward compatible).

@@ -1,8 +1,8 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Entities;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces;
+using CleanArchitectureTemplate.Domain.Entities;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Entities
+namespace CleanArchitectureTemplate.Domain.Entities
 {
     public class UserEntity : AuditableEntity
     {

@@ -4,8 +4,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <Content Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="7.1.0" />
@@ -43,6 +50,11 @@
     <ProjectReference Include="..\CleanArchitectureTemplate.Domain\CleanArchitectureTemplate.Domain.csproj" />
     <ProjectReference Include="..\CleanArchitectureTemplate.Infrastructure\CleanArchitectureTemplate.Infrastructure.csproj" />
     <ProjectReference Include="..\CleanArchitectureTemplate.Resources\CleanArchitectureTemplate.Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Media\Images\" />
+    <Folder Include="wwwroot\Media\Voices\" />
   </ItemGroup>
 
 </Project>

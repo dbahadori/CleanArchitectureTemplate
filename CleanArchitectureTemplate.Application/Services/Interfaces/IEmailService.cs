@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.Services.Interfaces
+namespace CleanArchitectureTemplate.Application.Services.Interfaces
 {
     public interface IEmailService
     {

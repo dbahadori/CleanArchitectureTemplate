@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CleanArchitectureReferenceTemplate.Domain.Entities;
-using CleanArchitectureReferenceTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Models;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Mapper
+namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Mapper
 {
     public class MappingProfile : Profile
     {

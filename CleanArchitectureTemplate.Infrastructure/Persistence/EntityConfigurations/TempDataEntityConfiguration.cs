@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using CleanArchitectureReferenceTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Entities;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Persistence.EntityConfigurations
+namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfigurations
 {
 
     internal sealed class TempDataEntityConfiguration : object, IEntityTypeConfiguration<TempDataEntity>

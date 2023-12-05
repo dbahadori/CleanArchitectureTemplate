@@ -1,37 +1,61 @@
-﻿using System;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Exceptions
 {
-    public class DomainModelNotFoundException : Exception
+    public class DomainModelNotfoundException : CustomException
     {
-
-        public DomainModelNotFoundException()
-            : base()
+        public DomainModelNotfoundException()
+            : base(string.Empty, null)
         {
-
         }
 
-        public DomainModelNotFoundException(string message, Exception innerException, string localizedMessage)
-            : base(message, innerException)
+        public DomainModelNotfoundException WithUserFriendlyMessage(string userFriendlyMessage)
         {
-            Data["LocalizedMessage"] = localizedMessage;
-
+            UserFriendlyMessage = userFriendlyMessage;
+            return this;
         }
 
-        public DomainModelNotFoundException(string message, string localizedMessage)
-            : base(message)
+        public DomainModelNotfoundException WithDeveloperDetail(string developerDetail)
         {
-            Data["LocalizedMessage"] = localizedMessage;
-
+            DeveloperDetail = developerDetail;
+            return this;
         }
 
-        public DomainModelNotFoundException(string message)
-    : base(message)
+        public DomainModelNotfoundException WithType(string type)
         {
+            Type = type;
+            return this;
+        }
+
+        public DomainModelNotfoundException WithErrorCode(string errorCode)
+        {
+            ErrorCode = errorCode;
+            return this;
+        }
+
+        public DomainModelNotfoundException WithInnerCustomException(Exception innerCustomException)
+        {
+            InnerCustomException = innerCustomException;
+            return this;
+        }
+
+        public DomainModelNotfoundException WithParam(IDictionary<string, string[]> param)
+        {
+            Param = param;
+            return this;
+        }
+
+        public DomainModelNotfoundException(string name,
+            object key,
+            string? userFriendlyMessage)
+            : base(userFriendlyMessage)
+        {
+            DeveloperDetail = $"The specified \"{name}\" ({key}) was not found. Please ensure you have selected a valid \"{name}\" from the available options.";
         }
     }
 }

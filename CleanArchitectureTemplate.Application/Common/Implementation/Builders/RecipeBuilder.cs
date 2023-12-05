@@ -1,9 +1,9 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Common.Validations;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Builders;
+﻿using CleanArchitectureTemplate.Domain.Common.Validations;
+using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Builders
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Builders
 {
     public class RecipeBuilder : IRecipeBuilder
     {

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using CleanArchitectureReferenceTemplate.Application.DTO.V1;
-using CleanArchitectureReferenceTemplate.Application.Extensions;
-using CleanArchitectureReferenceTemplate.Application.Services.Implementations;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Implementations;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces;
+using CleanArchitectureTemplate.Application.DTO.V1;
+using CleanArchitectureTemplate.Application.Extensions;
+using CleanArchitectureTemplate.Application.Services.Implementations;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Application.UseCases.Implementations;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitectureReferenceTemplate.Application
+namespace CleanArchitectureTemplate.Application
 {
     public static class ConfigureServices
     {

@@ -1,8 +1,8 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
+﻿using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Middleware
+namespace CleanArchitectureTemplate.Presentation.Middleware
 {
     public class UserAuthorizationRequirement : IAuthorizationRequirement { }
     public class UserAuthorizationHandler : AuthorizationHandler<UserAuthorizationRequirement>
@@ -20,12 +20,12 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Middleware
 
             else
             {
-                var userFromRepository = await _unitOfWork.UserRepository.FindByIdAsync(new Guid(userId));
-                if (!userFromRepository.IsSuccessful)
+                var user = await _unitOfWork.UserRepository.FindByIdAsync(new Guid(userId));
+                if (user != null)
+                    context.Succeed(requirement);
+                else
                     context.Fail();
 
-                else
-                    context.Succeed(requirement);
 
             }
         }

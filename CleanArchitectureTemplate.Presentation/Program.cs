@@ -1,12 +1,13 @@
-using CleanArchitectureReferenceTemplate.Infrastructure;
-using CleanArchitectureReferenceTemplate.Application;
-using CleanArchitectureReferenceTemplate.Presentation;
-using CleanArchitectureReferenceTemplate.Domain;
-using CleanArchitectureReferenceTemplate.Presentation.Middleware;
+using CleanArchitectureTemplate.Infrastructure;
+using CleanArchitectureTemplate.Application;
+using CleanArchitectureTemplate.Presentation;
+using CleanArchitectureTemplate.Domain;
+using CleanArchitectureTemplate.Presentation.Middleware;
 using Serilog;
 using Microsoft.Extensions.Configuration;
-using CleanArchitectureReferenceTemplate.Infrastructure.Common;
-using CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Logging;
+using CleanArchitectureTemplate.Infrastructure.Common;
+using CleanArchitectureTemplate.Infrastructure.CrossCutting.Logging;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,10 @@ builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Confi
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.DefaultIgnoreCondition= JsonIgnoreCondition.WhenWritingNull;
+}); 
 builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices(infrastructureConfiguration);

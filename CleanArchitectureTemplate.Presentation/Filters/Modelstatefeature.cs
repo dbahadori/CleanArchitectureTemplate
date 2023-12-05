@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Filters
+namespace CleanArchitectureTemplate.Presentation.Filters
 {
     public class Modelstatefeature
     {

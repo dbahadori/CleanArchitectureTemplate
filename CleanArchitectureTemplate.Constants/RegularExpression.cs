@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureReferenceTemplate.Constants
+﻿namespace CleanArchitectureTemplate.Constants
 {
     public static class RegularExpression : object
     {

@@ -1,32 +1,54 @@
-﻿using System;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Common.Exceptions
+namespace CleanArchitectureTemplate.Domain.Common.Exceptions
 {
-    public class ModelNotFoundException : Exception
+    public class ModelNotFoundException : CustomException
     {
 
         public ModelNotFoundException()
-            : base()
+            : base(string.Empty, null)
         {
-
         }
 
-        public ModelNotFoundException(string message, Exception innerException, string localizedMessage)
-            : base(message, innerException)
+        public ModelNotFoundException WithUserFriendlyMessage(string userFriendlyMessage)
         {
-            Data["LocalizedMessage"] = localizedMessage;
-
+            UserFriendlyMessage = userFriendlyMessage;
+            return this;
         }
 
-        public ModelNotFoundException(string message, string localizedMessage)
-            : base(message)
+        public ModelNotFoundException WithDeveloperDetail(string developerDetail)
         {
-            Data["LocalizedMessage"] = localizedMessage;
+            DeveloperDetail = developerDetail;
+            return this;
+        }
 
+        public ModelNotFoundException WithType(string type)
+        {
+            Type = type;
+            return this;
+        }
+
+        public ModelNotFoundException WithErrorCode(string errorCode)
+        {
+            ErrorCode = errorCode;
+            return this;
+        }
+
+        public ModelNotFoundException WithInnerCustomException(Exception innerCustomException)
+        {
+            InnerCustomException = innerCustomException;
+            return this;
+        }
+
+        public ModelNotFoundException WithParam(IDictionary<string, string[]> param)
+        {
+            Param = param;
+            return this;
         }
     }
 }

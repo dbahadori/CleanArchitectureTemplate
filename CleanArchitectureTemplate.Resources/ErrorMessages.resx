@@ -123,14 +123,47 @@
   <data name="EmailUsedBefore" xml:space="preserve">
     <value>This Email Used before.</value>
   </data>
+  <data name="EntityNotFound" xml:space="preserve">
+    <value>The {0} with the specified ID was not found.</value>
+  </data>
+  <data name="ErrorDuringCreatingUser" xml:space="preserve">
+    <value>An error occurred during the user creation process.</value>
+  </data>
+  <data name="ErrorDuringRegistringUser" xml:space="preserve">
+    <value>An error occurred during the user {0} registration process.</value>
+  </data>
+  <data name="ErrorDuringUserLogin" xml:space="preserve">
+    <value>An error occurred during the user {0} Login process.</value>
+  </data>
+  <data name="ErrorDuringUserRetrievalByEmail" xml:space="preserve">
+    <value>An error occurred during user retrieval by email.</value>
+  </data>
+  <data name="ErrorDuringUserRetrievalById" xml:space="preserve">
+    <value>An error occurred during user retrieval by ID from data access.</value>
+  </data>
   <data name="ExcelFileNotCorrect" xml:space="preserve">
-    <value>Excel file should have Exactly X Row.</value>
+    <value>Excel file should have Exactly 42 Row.</value>
   </data>
   <data name="ExistEmailBefore" xml:space="preserve">
     <value>This Email {0} has been registerd before.</value>
   </data>
   <data name="ExtentionNotSupported" xml:space="preserve">
     <value>This Extention : {0} is not supported.</value>
+  </data>
+  <data name="FailedToAddEntity" xml:space="preserve">
+    <value>Failed to add entity {0} to the repository.</value>
+  </data>
+  <data name="FailedToDeleteEntity" xml:space="preserve">
+    <value>Failed to Delete the {0}.</value>
+  </data>
+  <data name="FailedToGetAllEntities" xml:space="preserve">
+    <value>Failed to retrieve the entities from the repository</value>
+  </data>
+  <data name="FailedToGetEntity" xml:space="preserve">
+    <value>Failed to retrieve the {0}.</value>
+  </data>
+  <data name="FaliedToCheckEmail" xml:space="preserve">
+    <value />
   </data>
   <data name="FileSizeError" xml:space="preserve">
     <value>File size : {0}mb is high.</value>
@@ -139,7 +172,10 @@
     <value>Excel File Template is Not Correct. Please Check All Rows of Table and Compare with Base Template File.</value>
   </data>
   <data name="GenerateTokenError" xml:space="preserve">
-    <value>Generate token Error. Cause: {0}.</value>
+    <value>An error occurred during the token generation process.</value>
+  </data>
+  <data name="InvalidPageSizePageIndex" xml:space="preserve">
+    <value>The specified page size or page index is invalid. Please provide valid values for the page size and page index.</value>
   </data>
   <data name="LanguageNotSupported" xml:space="preserve">
     <value>This Language : {0} is Not Supported.</value>
@@ -154,9 +190,15 @@
     <value>Password Pattern is Not Correct.</value>
   </data>
   <data name="TokenIsEmpty" xml:space="preserve">
-    <value>Token is Empty.</value>
+    <value>Token is empty.</value>
   </data>
-  <data name="UserNotFound" xml:space="preserve">
-    <value>User {0} Was Not Found.</value>
+  <data name="UpdateEntityError" xml:space="preserve">
+    <value>Failed to update the entity {0} in the repository.</value>
+  </data>
+  <data name="UserWithEmailNotFound" xml:space="preserve">
+    <value>User with the specified Email: {0} was not found.</value>
+  </data>
+  <data name="UserWithIdNotFound" xml:space="preserve">
+    <value>User with the specified ID : {0} was not found.</value>
   </data>
 </root>

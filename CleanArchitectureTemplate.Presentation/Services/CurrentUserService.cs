@@ -1,7 +1,7 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
 using System.Security.Claims;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Services
+namespace CleanArchitectureTemplate.Presentation.Services
 {
     public class CurrentUserService : ICurrentUserService
     {

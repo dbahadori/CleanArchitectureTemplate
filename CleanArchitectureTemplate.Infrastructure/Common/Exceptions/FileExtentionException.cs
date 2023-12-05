@@ -1,16 +1,49 @@
-﻿namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Exceptions;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
 
-public class FileExtentionException : Exception
+namespace CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
+
+public class FileExtentionException : CustomException
 {
+
     public FileExtentionException()
-        : base()
+        : base(string.Empty, null)
     {
     }
 
-    public FileExtentionException(string message, string localizedMessage)
-        : base(message)
+    public FileExtentionException WithUserFriendlyMessage(string userFriendlyMessage)
     {
-        Data["LocalizedMessage"] = localizedMessage;
-
+        UserFriendlyMessage = userFriendlyMessage;
+        return this;
     }
+
+    public FileExtentionException WithDeveloperDetail(string developerDetail)
+    {
+        DeveloperDetail = developerDetail;
+        return this;
+    }
+
+    public FileExtentionException WithType(string type)
+    {
+        Type = type;
+        return this;
+    }
+
+    public FileExtentionException WithErrorCode(string errorCode)
+    {
+        ErrorCode = errorCode;
+        return this;
+    }
+
+    public FileExtentionException WithInnerCustomException(Exception innerCustomException)
+    {
+        InnerCustomException = innerCustomException;
+        return this;
+    }
+
+    public FileExtentionException WithParam(IDictionary<string, string[]> param)
+    {
+        Param = param;
+        return this;
+    }
+
 }

@@ -1,8 +1,8 @@
 
-using CleanArchitectureReferenceTemplate.Domain.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces;
+using CleanArchitectureTemplate.Domain.Enums;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Entities
+namespace CleanArchitectureTemplate.Domain.Entities
 {
     public class RecipeEntity : AuditableEntity
     {

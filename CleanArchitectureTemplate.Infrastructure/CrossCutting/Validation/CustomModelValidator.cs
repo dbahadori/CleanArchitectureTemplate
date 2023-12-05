@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using CleanArchitectureReferenceTemplate.Domain.Common.Validations;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Domain.Common.Validations;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Validation
+namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation
 {
     public class CustomModelValidator : IModelValidator
     {

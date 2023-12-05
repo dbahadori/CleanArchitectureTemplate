@@ -1,22 +1,55 @@
-﻿using FluentValidation.Results;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using FluentValidation.Results;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions;
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
 
-public class CustomValidationException : Exception
+public class CustomValidationException : CustomException
 {
     public CustomValidationException()
-        : base("One or more validation failures have occurred.")
+    : base("One or more validation failures have occurred.", null)
     {
-        Errors = new Dictionary<string, string[]>();
+    }
+    public CustomValidationException WithUserFriendlyMessage(string userFriendlyMessage)
+    {
+        UserFriendlyMessage = userFriendlyMessage;
+        return this;
     }
 
-    public CustomValidationException(IEnumerable<ValidationFailure> failures)
-        : this()
+    public CustomValidationException WithDeveloperDetail(string developerDetail)
     {
-        Errors = failures
-            .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
-            .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
+        DeveloperDetail = developerDetail;
+        return this;
     }
 
-    public IDictionary<string, string[]> Errors { get; }
+    public CustomValidationException WithType(string type)
+    {
+        Type = type;
+        return this;
+    }
+
+    public CustomValidationException WithErrorCode(string errorCode)
+    {
+        ErrorCode = errorCode;
+        return this;
+    }
+
+    public CustomValidationException WithInnerCustomException(Exception innerCustomException)
+    {
+        InnerCustomException = innerCustomException;
+        return this;
+    }
+
+    public CustomValidationException WithParam(IDictionary<string, string[]> param)
+    {
+        Param = param;
+        return this;
+    }
+    public CustomValidationException WithParam(IEnumerable<ValidationFailure> failures)
+    {
+        
+        Param = failures
+           .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
+           .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray()); ;
+        return this;
+    }
 }

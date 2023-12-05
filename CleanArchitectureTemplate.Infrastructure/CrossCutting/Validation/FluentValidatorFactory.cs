@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using System.Reflection;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Validation
+namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation
 {
     public class FluentValidatorFactory : ICustomValidatorFactory
     {

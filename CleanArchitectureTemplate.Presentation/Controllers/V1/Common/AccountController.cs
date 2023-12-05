@@ -1,11 +1,11 @@
-﻿using CleanArchitectureReferenceTemplate.Application.DTO.V1;
-using CleanArchitectureReferenceTemplate.Application.UseCases.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Common.Validations;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+﻿using CleanArchitectureTemplate.Application.DTO.V1;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces;
+using CleanArchitectureTemplate.Domain.Common.Validations;
+using CleanArchitectureTemplate.Domain.ValueObejects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Controllers.V1.Common
+namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common
 {
     // Specify the base (or current) API route to:
     // - Keep the existing route serving a default version (backward compatible).
@@ -33,7 +33,7 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Controllers.V1.Common
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginInputMessage request)
+        public async Task<IActionResult> Login([FromBody] UserLoginInputModel request)
         {
             // Validation
             _modelValidator.ValidateAndThrow(request);
@@ -45,7 +45,7 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Controllers.V1.Common
                 if (!loginResult.IsSuccessful)
                     throw loginResult.Exception!;
 
-                var result = loginResult as OperationResult<UserLoginOutputMessage>;
+                var result = loginResult as OperationResult<UserLoginOutputModel>;
                 return Ok(result!.Data!);
             }
             catch (Exception)
@@ -55,7 +55,7 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Controllers.V1.Common
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterInputMessage request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterInputModel request)
         {
             // Validation
             _modelValidator.ValidateAndThrow(request);

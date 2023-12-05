@@ -1,12 +1,12 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Models;
+﻿using CleanArchitectureTemplate.Domain.Interfaces;
+using CleanArchitectureTemplate.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.ValueObejects
+namespace CleanArchitectureTemplate.Domain.ValueObejects
 {
     public class AuthenticationResult : BaseServiceResult
     {

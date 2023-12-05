@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Extentions
+namespace CleanArchitectureTemplate.Infrastructure.Extentions
 {
     public static class DateExtentionMethod
     {

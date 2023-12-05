@@ -1,15 +1,15 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
-using CleanArchitectureReferenceTemplate.Infrastructure.Extentions;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Infrastructure.Extentions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Services
+namespace CleanArchitectureTemplate.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
@@ -59,7 +59,7 @@ namespace CleanArchitectureReferenceTemplate.Infrastructure.Services
             catch (Exception ex)
             {
                 // LOG
-                return Task.FromResult(new TokenServiceResult() { Message = ex.Message });
+                return Task.FromResult(new TokenServiceResult() { Exception = ex });
             }
         }
 

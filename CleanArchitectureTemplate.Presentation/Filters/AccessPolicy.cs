@@ -1,12 +1,12 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+﻿using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.ValueObejects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
-using CleanArchitectureReferenceTemplate.Presentation.Common.Exceptions;
+using CleanArchitectureTemplate.Presentation.Common.Exceptions;
 
-namespace CleanArchitectureReferenceTemplate.Presentation.Filters
+namespace CleanArchitectureTemplate.Presentation.Filters
 {
     public class AccessPolicy : TypeFilterAttribute
     {
@@ -33,18 +33,15 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Filters
 
                 string userId = context.HttpContext.User.FindFirst(ClaimTypes.Name)!.Value;
                 if (string.IsNullOrWhiteSpace(userId))
-                    throw new ForbiddenException("User Don't Access to this Resourse");
+                    throw new ForbiddenException()
+                        .WithUserFriendlyMessage("User Don't Access to this Resourse")
+                        .WithDeveloperDetail("User Don't Access to this Resourse");
 
-                var userFromRepository = await _unitOfWork.UserRepository.FindByIdAsync(new Guid(userId));
-                if (!userFromRepository.IsSuccessful)
-                    throw new ForbiddenException("User Don't Access to this Resourse");
-
-                var userResult = userFromRepository as OperationResult<User>;
-                if (userResult == null || userResult.Data == null)
-                    throw new ForbiddenException("User Don't Access to this Resourse");
-
-                var user = userResult!.Data;
-
+                var user = await _unitOfWork.UserRepository.FindByIdAsync(new Guid(userId));
+                if (user==null)
+                    throw new ForbiddenException()
+                        .WithUserFriendlyMessage("User Don't Access to this Resourse")
+                        .WithDeveloperDetail("User Don't Access to this Resourse");
                 var Access = false;
                 foreach (var role in _roles)
                 {
@@ -53,8 +50,9 @@ namespace CleanArchitectureReferenceTemplate.Presentation.Filters
                         break;
                 }
                 if (!Access)
-                    throw new ForbiddenException("User Don't Access to this Resourse");
-
+                    throw new ForbiddenException()
+                        .WithUserFriendlyMessage("User Don't Access to this Resourse")
+                        .WithDeveloperDetail("User Don't Access to this Resourse");
                 var result = await next();
 
             }

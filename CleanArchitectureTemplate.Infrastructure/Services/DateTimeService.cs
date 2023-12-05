@@ -1,11 +1,11 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Services
+namespace CleanArchitectureTemplate.Infrastructure.Services
 {
     internal class DateTimeService : IDateTime
     {

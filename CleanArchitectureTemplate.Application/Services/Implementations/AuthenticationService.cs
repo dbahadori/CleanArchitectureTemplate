@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Resources;
 
-namespace CleanArchitectureReferenceTemplate.Application.Services.Implementations
+namespace CleanArchitectureTemplate.Application.Services.Implementations
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -21,22 +22,36 @@ namespace CleanArchitectureReferenceTemplate.Application.Services.Implementation
 
         public async Task<AuthenticationResult> AuthenticateUserAsync(string email, string password)
         {
-            var Result = await _unitOfWork.UserRepository.FindByEmailAsync(email);
-            if (!Result.IsSuccessful)
+            var user = await _unitOfWork.UserRepository.FindByEmailAsync(email);
+            if (user==null)
             {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.UserWithEmailNotFound, email);
+
                 return new AuthenticationResult
                 {
-                    Exception = new NotFoundUserException(string.Format(Resources.ErrorMessages.UserNotFound, email))
+                    Exception = new NotFoundException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
                 };
             }
+            var isValidPassword = user.ValidatePassword(password);
+            if (!isValidPassword)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.PasswordNotCorrect, email);
+                return new AuthenticationResult
+                {
+                    Exception = new PasswordNotCorrectException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                };
+            }
+ 
 
-            var userResult = Result as OperationResult<User>;
-
-            var checkPasswordResult = await _unitOfWork.UserRepository.ValidateCredentialsAsync(userResult!.Data!.Email!, password);
-            if (!checkPasswordResult.IsSuccessful)
-                return new AuthenticationResult { Exception = checkPasswordResult.Exception };
-
-            return new AuthenticationResult() { AuthenticatedUser = userResult.Data!, IsSuccess = true, IsUserAuthenticated = true };
+            return new AuthenticationResult() { 
+                AuthenticatedUser = user,
+                IsSuccess = true,
+                IsUserAuthenticated = true 
+            };
 
         }
     }

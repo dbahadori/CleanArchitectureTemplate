@@ -1,30 +1,62 @@
-﻿using System;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Exceptions
 {
-    public class ExistEmailException : Exception
+    public class ExistEmailException : CustomException
     {
 
         public ExistEmailException()
-            : base()
+            : base(string.Empty, null)
         {
         }
 
-        public ExistEmailException(string message, Exception innerException, string localizedMessage)
-            : base(message, innerException)
+        public ExistEmailException WithUserFriendlyMessage(string userFriendlyMessage)
         {
-            Data["LocalizedMessage"] = localizedMessage;
+            UserFriendlyMessage = userFriendlyMessage;
+            return this;
         }
 
-        public ExistEmailException(string email, string localizedMessage)
-            : base($"This Email : \"{email}\" was found. Can't create new user with this Email address.")
+        public ExistEmailException WithDeveloperDetail(string developerDetail)
         {
-            Data["LocalizedMessage"] = localizedMessage;
+            DeveloperDetail = developerDetail;
+            return this;
+        }
+
+        public ExistEmailException WithType(string type)
+        {
+            Type = type;
+            return this;
+        }
+
+        public ExistEmailException WithErrorCode(string errorCode)
+        {
+            ErrorCode = errorCode;
+            return this;
+        }
+
+        public ExistEmailException WithInnerCustomException(Exception innerCustomException)
+        {
+            InnerCustomException = innerCustomException;
+            return this;
+        }
+
+        public ExistEmailException WithParam(IDictionary<string, string[]> param)
+        {
+            Param = param;
+            return this;
+        }
+
+        public ExistEmailException(string email, string? userFriendlyMessage)
+            : base(userFriendlyMessage)
+        {
+             DeveloperDetail=$"This Email : \"{email}\" was found. Can't create new user with this Email address.";
 
         }
     }

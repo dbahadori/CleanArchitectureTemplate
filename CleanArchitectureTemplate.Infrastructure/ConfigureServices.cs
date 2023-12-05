@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Context;
-using CleanArchitectureReferenceTemplate.Infrastructure.Extentions;
-using CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Mapper;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
+using CleanArchitectureTemplate.Infrastructure.Extentions;
+using CleanArchitectureTemplate.Infrastructure.CrossCutting.Mapper;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure
+namespace CleanArchitectureTemplate.Infrastructure
 {
     public static class ConfigureServices
     {

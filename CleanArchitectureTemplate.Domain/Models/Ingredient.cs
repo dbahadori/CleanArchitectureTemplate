@@ -1,7 +1,7 @@
-using CleanArchitectureReferenceTemplate.Domain.Common.Validations;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Common.Validations;
+using CleanArchitectureTemplate.Domain.Enums;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Models
 {
     public class Ingredient
     {

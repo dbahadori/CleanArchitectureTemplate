@@ -1,12 +1,12 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.DTO.V1.Admin;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.DTO.V1.Admin;
 using Microsoft.AspNetCore.Http;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Common.Components
+namespace CleanArchitectureTemplate.Infrastructure.Common.Components
 {
     internal class WordFileFromHttpRequestParser : IHttpFileParser
     {
-        public IEnumerable<FileContentOutput> Parse(IFormFile file)
+        public IEnumerable<FileContentOutputModel> Parse(IFormFile file)
         {
             throw new NotImplementedException();
         }

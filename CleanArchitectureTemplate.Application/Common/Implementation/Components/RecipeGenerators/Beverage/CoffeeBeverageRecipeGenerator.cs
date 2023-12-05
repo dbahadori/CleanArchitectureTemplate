@@ -1,9 +1,9 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Models;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Builders;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces.Models;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Components.RecipeGenerators.Beverage
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Beverage
 {
     internal class CoffeeBeverageRecipeGenerator : IBeverageRecipeGenerator
     {
@@ -59,6 +59,7 @@ namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.C
                 .AddIngredient(water)
                 .AddIngredient(sugar)
                 .AddIngredient(milk)
+                .WithCookingTime(TimeSpan.FromMinutes(10))
                 .Build();
 
             return recipe;

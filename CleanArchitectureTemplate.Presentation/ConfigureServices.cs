@@ -1,19 +1,19 @@
-﻿using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Context;
-using CleanArchitectureReferenceTemplate.Presentation.Services;
+﻿using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
+using CleanArchitectureTemplate.Presentation.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using CleanArchitectureReferenceTemplate.Presentation.Filters;
+using CleanArchitectureTemplate.Presentation.Filters;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using CleanArchitectureReferenceTemplate.Presentation.Extentions;
+using CleanArchitectureTemplate.Presentation.Extentions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using CleanArchitectureReferenceTemplate.Presentation.Middleware;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Presentation.Middleware;
+using CleanArchitectureTemplate.Application.Common.Interfaces;
 
-namespace CleanArchitectureReferenceTemplate.Presentation
+namespace CleanArchitectureTemplate.Presentation
 
 {
     public static class ConfigureServices

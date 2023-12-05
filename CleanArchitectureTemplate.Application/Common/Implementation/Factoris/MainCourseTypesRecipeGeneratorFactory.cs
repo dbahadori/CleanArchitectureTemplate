@@ -1,6 +1,6 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Factories
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Factories
 {
     public class MainCourseTypesRecipeGeneratorFactory : IRecipeGeneratorFactory
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Interfaces
+namespace CleanArchitectureTemplate.Domain.Interfaces
 {
     public abstract class AuditableEntity
     {

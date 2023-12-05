@@ -1,25 +1,25 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Domain.Common.Validations;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities;
-using CleanArchitectureReferenceTemplate.Infrastructure.Common.Components;
-using CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Logging;
-using CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Validation;
-using CleanArchitectureReferenceTemplate.Infrastructure.Factories;
-using CleanArchitectureReferenceTemplate.Infrastructure.Interceptors;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Context;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Repositories;
-using CleanArchitectureReferenceTemplate.Infrastructure.Persistence.Repositories.Entities;
-using CleanArchitectureReferenceTemplate.Infrastructure.Services;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Domain.Common.Validations;
+using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities;
+using CleanArchitectureTemplate.Infrastructure.Common.Components;
+using CleanArchitectureTemplate.Infrastructure.CrossCutting.Logging;
+using CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation;
+using CleanArchitectureTemplate.Infrastructure.Factories;
+using CleanArchitectureTemplate.Infrastructure.Interceptors;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Repositories;
+using CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities;
+using CleanArchitectureTemplate.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Extentions
+namespace CleanArchitectureTemplate.Infrastructure.Extentions
 {
     public static class DependencyInjection
     {

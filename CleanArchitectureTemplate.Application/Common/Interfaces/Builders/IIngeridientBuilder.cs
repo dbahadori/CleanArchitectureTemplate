@@ -1,8 +1,8 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Domain.Models;
+﻿using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Models;
 
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Builders
+namespace CleanArchitectureTemplate.Application.Common.Interfaces.Builders
 {
     public interface IIngredientBuilder
     {

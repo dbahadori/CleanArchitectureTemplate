@@ -1,6 +1,6 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Entities;
-using CleanArchitectureReferenceTemplate.Domain.Interfaces;
-namespace CleanArchitectureReferenceTemplate.Domain.Entities
+﻿using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Interfaces;
+namespace CleanArchitectureTemplate.Domain.Entities
 {
     public class TempDataEntity : AuditableEntity
     {

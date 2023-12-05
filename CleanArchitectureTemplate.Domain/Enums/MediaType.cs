@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Enums
+namespace CleanArchitectureTemplate.Domain.Enums
 {
     public enum MediaType
     {

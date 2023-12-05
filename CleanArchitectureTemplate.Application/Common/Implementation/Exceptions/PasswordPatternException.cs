@@ -1,32 +1,54 @@
-﻿using System;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Application.Common.Implementation.Exceptions
+namespace CleanArchitectureTemplate.Application.Common.Implementation.Exceptions
 {
-    public class PasswordPatternException : Exception
+    public class PasswordPatternException : CustomException
     {
 
         public PasswordPatternException()
-            : base()
+           : base(string.Empty, null)
         {
-
         }
 
-        public PasswordPatternException(string message, Exception innerException, string localizedMessage)
-            : base(message, innerException)
+        public PasswordPatternException WithUserFriendlyMessage(string userFriendlyMessage)
         {
-            Data["LocalizedMessage"] = localizedMessage;
-
+            UserFriendlyMessage = userFriendlyMessage;
+            return this;
         }
 
-        public PasswordPatternException(string message, string localizedMessage)
-            : base(message)
+        public PasswordPatternException WithDeveloperDetail(string developerDetail)
         {
-            Data["LocalizedMessage"] = localizedMessage;
+            DeveloperDetail = developerDetail;
+            return this;
+        }
 
+        public PasswordPatternException WithType(string type)
+        {
+            Type = type;
+            return this;
+        }
+
+        public PasswordPatternException WithErrorCode(string errorCode)
+        {
+            ErrorCode = errorCode;
+            return this;
+        }
+
+        public PasswordPatternException WithInnerCustomException(Exception innerCustomException)
+        {
+            InnerCustomException = innerCustomException;
+            return this;
+        }
+
+        public PasswordPatternException WithParam(IDictionary<string, string[]> param)
+        {
+            Param = param;
+            return this;
         }
     }
 }

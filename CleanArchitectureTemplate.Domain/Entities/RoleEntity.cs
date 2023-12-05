@@ -1,7 +1,7 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Interfaces;
+﻿using CleanArchitectureTemplate.Domain.Interfaces;
 
 
-namespace CleanArchitectureReferenceTemplate.Domain.Entities
+namespace CleanArchitectureTemplate.Domain.Entities
 {
     public class RoleEntity : AuditableEntity
     {

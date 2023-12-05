@@ -1,7 +1,7 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Entities;
+﻿using CleanArchitectureTemplate.Domain.Entities;
 
 
-namespace CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities
+namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities
 {
     public interface IBookmarkRepository : IBaseRepository<BookmarkEntity, Guid>
     {

@@ -1,6 +1,6 @@
-using CleanArchitectureReferenceTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Entities;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Models
 {
     public class UserProfile
     {

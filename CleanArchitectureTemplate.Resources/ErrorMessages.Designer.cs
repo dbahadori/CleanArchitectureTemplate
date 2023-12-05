@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CleanArchitectureReferenceTemplate.Resources {
+namespace CleanArchitectureTemplate.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace CleanArchitectureReferenceTemplate.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CleanArchitectureReferenceTemplate.Resources.ErrorMessages", typeof(ErrorMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CleanArchitectureTemplate.Resources.ErrorMessages", typeof(ErrorMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -69,7 +69,6 @@ namespace CleanArchitectureReferenceTemplate.Resources {
             }
         }
         
-        
         /// <summary>
         ///   Looks up a localized string similar to This Email Used before..
         /// </summary>
@@ -80,7 +79,61 @@ namespace CleanArchitectureReferenceTemplate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Excel file should have Exactly X Row..
+        ///   Looks up a localized string similar to The {0} with the specified ID was not found..
+        /// </summary>
+        public static string EntityNotFound {
+            get {
+                return ResourceManager.GetString("EntityNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during the user creation process..
+        /// </summary>
+        public static string ErrorDuringCreatingUser {
+            get {
+                return ResourceManager.GetString("ErrorDuringCreatingUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during the user {0} registration process..
+        /// </summary>
+        public static string ErrorDuringRegistringUser {
+            get {
+                return ResourceManager.GetString("ErrorDuringRegistringUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during the user {0} Login process..
+        /// </summary>
+        public static string ErrorDuringUserLogin {
+            get {
+                return ResourceManager.GetString("ErrorDuringUserLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during user retrieval by email..
+        /// </summary>
+        public static string ErrorDuringUserRetrievalByEmail {
+            get {
+                return ResourceManager.GetString("ErrorDuringUserRetrievalByEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during user retrieval by ID from data access..
+        /// </summary>
+        public static string ErrorDuringUserRetrievalById {
+            get {
+                return ResourceManager.GetString("ErrorDuringUserRetrievalById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel file should have Exactly 42 Row..
         /// </summary>
         public static string ExcelFileNotCorrect {
             get {
@@ -107,6 +160,51 @@ namespace CleanArchitectureReferenceTemplate.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to add entity {0} to the repository..
+        /// </summary>
+        public static string FailedToAddEntity {
+            get {
+                return ResourceManager.GetString("FailedToAddEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Delete the {0}..
+        /// </summary>
+        public static string FailedToDeleteEntity {
+            get {
+                return ResourceManager.GetString("FailedToDeleteEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to retrieve the entities from the repository.
+        /// </summary>
+        public static string FailedToGetAllEntities {
+            get {
+                return ResourceManager.GetString("FailedToGetAllEntities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to retrieve the {0}..
+        /// </summary>
+        public static string FailedToGetEntity {
+            get {
+                return ResourceManager.GetString("FailedToGetEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string FaliedToCheckEmail {
+            get {
+                return ResourceManager.GetString("FaliedToCheckEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File size : {0}mb is high..
         /// </summary>
         public static string FileSizeError {
@@ -125,11 +223,20 @@ namespace CleanArchitectureReferenceTemplate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate token Error. Cause: {0}..
+        ///   Looks up a localized string similar to An error occurred during the token generation process..
         /// </summary>
         public static string GenerateTokenError {
             get {
                 return ResourceManager.GetString("GenerateTokenError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified page size or page index is invalid. Please provide valid values for the page size and page index..
+        /// </summary>
+        public static string InvalidPageSizePageIndex {
+            get {
+                return ResourceManager.GetString("InvalidPageSizePageIndex", resourceCulture);
             }
         }
         
@@ -170,7 +277,7 @@ namespace CleanArchitectureReferenceTemplate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Token is Empty..
+        ///   Looks up a localized string similar to Token is empty..
         /// </summary>
         public static string TokenIsEmpty {
             get {
@@ -179,11 +286,29 @@ namespace CleanArchitectureReferenceTemplate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User {0} Was Not Found..
+        ///   Looks up a localized string similar to Failed to update the entity {0} in the repository..
         /// </summary>
-        public static string UserNotFound {
+        public static string UpdateEntityError {
             get {
-                return ResourceManager.GetString("UserNotFound", resourceCulture);
+                return ResourceManager.GetString("UpdateEntityError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with the specified Email: {0} was not found..
+        /// </summary>
+        public static string UserWithEmailNotFound {
+            get {
+                return ResourceManager.GetString("UserWithEmailNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with the specified ID : {0} was not found..
+        /// </summary>
+        public static string UserWithIdNotFound {
+            get {
+                return ResourceManager.GetString("UserWithIdNotFound", resourceCulture);
             }
         }
     }

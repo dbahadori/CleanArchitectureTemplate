@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
-using CleanArchitectureReferenceTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.Models;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.CrossCutting.Validation.DomainModels
+namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DomainModels
 {
     public class RecipeValidator : AbstractValidator<Recipe>
     {
         public RecipeValidator()
         {
 
-            RuleFor(recipe => recipe.Instructions).NotEmpty();
+            RuleFor(recipe => recipe.Ingredients).NotEmpty();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureReferenceTemplate.Constants
+namespace CleanArchitectureTemplate.Constants
 {
     public static class MaxLength : object
     {

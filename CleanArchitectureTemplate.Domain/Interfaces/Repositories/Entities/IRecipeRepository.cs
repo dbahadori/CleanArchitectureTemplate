@@ -1,8 +1,8 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.Entities;
-using CleanArchitectureReferenceTemplate.Domain.Models;
-using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
+﻿using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.ValueObejects;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Interfaces.Repositories.Entities
+namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities
 {
     public interface IRecipeRepository : IBaseRepository<RecipeEntity, Guid>
     {

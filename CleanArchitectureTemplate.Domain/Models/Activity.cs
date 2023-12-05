@@ -1,7 +1,7 @@
 ﻿
-using CleanArchitectureReferenceTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Enums;
 
-namespace CleanArchitectureReferenceTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Models
 {
     public class Activity
     {

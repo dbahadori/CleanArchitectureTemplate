@@ -1,5 +1,5 @@
 
-namespace CleanArchitectureReferenceTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Models
 {
     public class Session
     {

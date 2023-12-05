@@ -1,12 +1,13 @@
-﻿using CleanArchitectureReferenceTemplate.Domain.ValueObejects;
-using CleanArchitectureReferenceTemplate.Infrastructure.Common.Exceptions;
+﻿using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
-using CleanArchitectureReferenceTemplate.Application.Services.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.DTO.V1.Admin;
+using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Application.DTO.V1.Admin;
+using CleanArchitectureTemplate.Resources;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Services
+namespace CleanArchitectureTemplate.Infrastructure.Services
 {
     public class HttpFileParserService : IFileParserService
     {
@@ -21,19 +22,26 @@ namespace CleanArchitectureReferenceTemplate.Infrastructure.Services
             {
                 var fileExtension = Path.GetExtension(file.FileName).ToLower();
                 if (!Enum.TryParse(fileExtension, out FileExtension extension))
-                    return OperationResult.Failure(new FileExtentionException($"{extension} is not supported.", string.Format(Resources.ErrorMessages.ExtentionNotSupported, extension)));
+                {
+                    var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ExtentionNotSupported, extension);
+                    return OperationResult.Failure(
+                        new FileExtentionException()
+                        .WithDeveloperDetail(localizedMessage)
+                        .WithDeveloperDetail(localizedMessage)                        
+                        );
+                }
                 else
                 {
                     var fileParser = _fileParserFactory.GetParserForHttpRequestFile(extension);
                     try
                     {
                         var result = fileParser.Parse(file);
-                        return OperationResult<IEnumerable<FileContentOutput>>.Success(result);
+                        return OperationResult<IEnumerable<FileContentOutputModel>>.Success(result);
 
                     }
-                    catch (Exception e)
+                    catch (Exception exception)
                     {
-                        return OperationResult<IEnumerable<FileContentOutput>>.Failure(e);
+                        return OperationResult<IEnumerable<FileContentOutputModel>>.Failure(exception);
                     }
                     
                 }

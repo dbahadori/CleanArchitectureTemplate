@@ -1,9 +1,9 @@
-﻿using CleanArchitectureReferenceTemplate.Application.Common.Interfaces;
-using CleanArchitectureReferenceTemplate.Application.Common.Interfaces.Factories;
-using CleanArchitectureReferenceTemplate.Domain.Enums;
+﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
+using CleanArchitectureTemplate.Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitectureReferenceTemplate.Infrastructure.Factories
+namespace CleanArchitectureTemplate.Infrastructure.Factories
 {
     public class FileParserFactory : IFileParserFactory
     {
