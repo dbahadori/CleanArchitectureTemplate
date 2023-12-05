@@ -1,7 +1,4 @@
 ﻿using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.SystemConsole;
-using Serilog.Sinks.File;
 using CleanArchitectureTemplate.Infrastructure.Common;
 using Microsoft.Extensions.Configuration;
 

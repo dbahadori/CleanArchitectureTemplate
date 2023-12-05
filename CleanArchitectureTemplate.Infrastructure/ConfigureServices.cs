@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 using CleanArchitectureTemplate.Infrastructure.Extentions;
 using CleanArchitectureTemplate.Infrastructure.CrossCutting.Mapper;
 

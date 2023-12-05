@@ -1,16 +1,11 @@
 ﻿using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 using CleanArchitectureTemplate.Presentation.Services;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using CleanArchitectureTemplate.Presentation.Filters;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using CleanArchitectureTemplate.Presentation.Extentions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using CleanArchitectureTemplate.Presentation.Middleware;
 using CleanArchitectureTemplate.Application.Common.Interfaces;
 
 namespace CleanArchitectureTemplate.Presentation
