@@ -5,7 +5,7 @@ using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeG
 
 namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.MainCourse
 {
-    internal class RoastGenerator : IMainCourseRecipeGenerator
+    public class RoastGenerator : IMainCourseRecipeGenerator
     {
         private readonly IRecipeBuilder _recipeBuilder;
         private readonly IIngredientBuilder _ingredientBuilder;

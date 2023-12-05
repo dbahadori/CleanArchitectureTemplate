@@ -17,11 +17,11 @@ namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DTO
         {
             RuleFor(input => input.RecipeCategory)
                 .NotEmpty().WithMessage(ValidationMessages.RecipeCategoryNotEmpty)
-                .Must(category => Enum.IsDefined(typeof(RecipeCategory), category)).WithMessage("test1");
+                .Must(category => Enum.IsDefined(typeof(RecipeCategory), category)).WithMessage("Invalid recipe category. Please provide a valid category.");
             
             RuleFor(input => input.RecipeType)
                 .NotEmpty().WithMessage(ValidationMessages.RecipeTypeNotEmpty)
-                .Must(type => Enum.IsDefined(typeof(RecipeType), type)).WithMessage("test2");
+                .Must(type => Enum.IsDefined(typeof(RecipeType), type)).WithMessage("Invalid recipe type. Please provide a valid type.");
         }
 
     }

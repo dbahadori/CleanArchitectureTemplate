@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfiguration
 {
-    internal sealed class ActivityEntityConfiguration : object, IEntityTypeConfiguration<ActivityEntity>
+    public sealed class ActivityEntityConfiguration : object, IEntityTypeConfiguration<ActivityEntity>
     {
         public void Configure(EntityTypeBuilder<ActivityEntity> builder)
         {

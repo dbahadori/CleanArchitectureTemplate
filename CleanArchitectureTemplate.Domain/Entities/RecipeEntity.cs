@@ -12,7 +12,7 @@ namespace CleanArchitectureTemplate.Domain.Entities
         }
 
         public string Name { get; set; } = string.Empty;
-        public string Instructions { get; set; } = string.Empty;
+        public string? Instructions { get; set; } = string.Empty;
         public string? Description { get; set; }
         public TimeSpan CookingTime { get; set; }
         public RecipeType Type { get; set; }

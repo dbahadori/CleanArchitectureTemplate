@@ -5,7 +5,7 @@ using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeG
 
 namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Dessert
 {
-    internal class CakeGenerator : IDessertRecipeGenerator
+    public class CakeGenerator : IDessertRecipeGenerator
     {
         private readonly IRecipeBuilder _recipeBuilder;
         private readonly IIngredientBuilder _ingredientBuilder;
