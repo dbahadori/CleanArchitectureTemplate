@@ -6,9 +6,9 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class ActivityRepository : BaseRepository<ActivityEntity, Guid>, IActivityRepository, IBaseRepository<ActivityEntity, Guid>
+    public class ActivityRepository : BaseRepository<Activity, Guid>, IActivityRepository, IBaseRepository<Activity, Guid>
     {
-        public ActivityRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public ActivityRepository(ApplicationDbContext context) : base(context)
         {
         }
 

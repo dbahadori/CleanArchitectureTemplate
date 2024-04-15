@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfiguration
 {
-    internal sealed class UserProfileEntityConfiguration : object, IEntityTypeConfiguration<UserProfileEntity>
+    internal sealed class UserProfileEntityConfiguration : object, IEntityTypeConfiguration<UserProfile>
     {
-        public void Configure(EntityTypeBuilder<UserProfileEntity> builder)
+        public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
             builder.HasKey(x => x.Id);
 
@@ -23,7 +23,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfigurati
             #region Activities
             builder.HasMany(x => x.Activities)
                 .WithOne(x => x.UserProfile)
-                .HasForeignKey(x => x.UserProfileId)
+                .HasForeignKey(x => x.UserProfile)
                 .IsRequired(true);
             #endregion
 

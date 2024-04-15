@@ -4,8 +4,9 @@ using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
 using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using CleanArchitectureTemplate.Domain.DTO;
+using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureTemplate.Domain.Models;
+
 using CleanArchitectureTemplate.Resources;
 
 namespace CleanArchitectureTemplate.Application.UseCases.Implementations

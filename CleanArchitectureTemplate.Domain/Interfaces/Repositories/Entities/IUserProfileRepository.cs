@@ -2,7 +2,7 @@
 
 namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities
 {
-    public interface IUserProfileRepository : IBaseRepository<UserProfileEntity , Guid>
+    public interface IUserProfileRepository : IBaseRepository<UserProfile , Guid>
     {
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfigurations
 {
-    internal sealed class RoleEntityConfiguration : object, IEntityTypeConfiguration<RoleEntity>
+    internal sealed class RoleEntityConfiguration : object, IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<RoleEntity> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(x => x.Id);
 

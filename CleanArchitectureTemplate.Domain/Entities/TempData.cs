@@ -2,15 +2,16 @@
 using CleanArchitectureTemplate.Domain.Interfaces;
 namespace CleanArchitectureTemplate.Domain.Entities
 {
-    public class TempDataEntity : AuditableEntity
+    public class TempData : AuditableEntity
     {
         public string? VerificationCode { get; set; }
         public int SendCount { get; set; }
         public long LastSendDateAt { get; set; }
         public int FailedCount{ get; set; }
         public bool IsVerified { get; set; }
+        public bool IsDeleted { get; set; }
 
         public required Guid UserId { get; set; }
-        public UserEntity? User { get; set; }
+        public User? User { get; set; }
     }
 }

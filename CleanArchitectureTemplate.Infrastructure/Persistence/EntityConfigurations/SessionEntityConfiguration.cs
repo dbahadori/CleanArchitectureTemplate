@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfiguration
 {
-    internal sealed class SessionEntityConfiguration : object, IEntityTypeConfiguration<SessionEntity>
+    internal sealed class SessionEntityConfiguration : object, IEntityTypeConfiguration<Session>
     {
-        public void Configure(EntityTypeBuilder<SessionEntity> builder)
+        public void Configure(EntityTypeBuilder<Session> builder)
         {
             #region Session
             builder.HasKey(x => x.Id);

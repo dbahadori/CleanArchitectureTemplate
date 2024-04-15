@@ -1,5 +1,5 @@
 ﻿using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureTemplate.Domain.Models;
+
 using CleanArchitectureTemplate.Domain.ValueObejects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

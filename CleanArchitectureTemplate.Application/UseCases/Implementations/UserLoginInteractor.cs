@@ -4,11 +4,10 @@ using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
 using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureTemplate.Domain.Models;
-using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
 using CleanArchitectureTemplate.Resources;
 using System;
 using CleanArchitectureTemplate.Domain.DTO;
+using CleanArchitectureTemplate.Domain.Entities;
 
 namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {
@@ -66,7 +65,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             var authenticatedUser = authenticationResult.AuthenticatedUser;
 
             // Create or Update User Session
-            var Session = new Session()
+            var session = new Session()
             {
                 Device = input.Device,
                 DeviceHash = input.DeviceHash,
@@ -76,10 +75,10 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 
 
             // Update or Add
-            if (!authenticatedUser!.HasSession(Session))
-                authenticatedUser.AddSessions(Session);
+            if (!authenticatedUser!.HasSession(session))
+                authenticatedUser.AddSessions(session);
             else
-                authenticatedUser.UpdateSession(Session);
+                authenticatedUser.UpdateSession(session);
 
             try
             {

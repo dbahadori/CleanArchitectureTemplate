@@ -5,9 +5,9 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class SessionRepository : BaseRepository<SessionEntity, Guid>, ISessionRepository
+    public class SessionRepository : BaseRepository<Session, Guid>, ISessionRepository
     {
-        public SessionRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public SessionRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

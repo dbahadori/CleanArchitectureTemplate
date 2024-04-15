@@ -13,20 +13,17 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
     {
         protected readonly ApplicationDbContext _context;
         private readonly DbSet<TEntity> _entitySet;
-        protected readonly IMapper _mapper;
 
-        public BaseRepository(ApplicationDbContext context, IMapper mapper)
+        public BaseRepository(ApplicationDbContext context)
         {
             _context = context;
             _entitySet = _context.Set<TEntity>();
-            _mapper = mapper;
         }
 
-        public virtual async Task<bool> AddAsync<TModel>(TModel model)
+        public virtual async Task<bool> AddAsync(TEntity entity)
         {
             try
             {
-                var entity = _mapper.Map<TEntity>(model);
                 await _entitySet.AddAsync(entity);
 
                 return true;
@@ -42,13 +39,36 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
         }
 
-        public virtual async Task<bool> DeleteAsync<TModel>(TKey key)
+        public virtual async Task<bool> DeleteAsync(TKey key)
         {
 
             try
             {
-                var entity = await GetEntityByIdAsync(key);
-                _entitySet.Remove(entity);
+                var entityToRemove = await _entitySet.FindAsync(key);
+                if (entityToRemove != null)
+                    _entitySet.Remove(entityToRemove);
+                else
+                    throw new NotFoundException();
+                return true;
+            }
+            catch (Exception exception)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
+                throw new RepositoryException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception);
+            }
+        }
+        public virtual async Task<bool> DeleteAsync(TEntity entity)
+        {
+
+            try
+            {
+                if (entity != null)
+                    _entitySet.Remove(entity);
+                else
+                    throw new ArgumentNullException();
                 return true;
             }
             catch (Exception exception)
@@ -61,14 +81,13 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
         }
 
-        public virtual async Task<TModel> GetByIdAsync<TModel>(TKey Tkey)
+        public virtual async Task<TEntity> GetByIdAsync(TKey Tkey)
         {
 
             try
             {
-                var entity = await GetEntityByIdAsync(Tkey);
-                var model = _mapper.Map<TModel>(entity);
-                return model;
+                var entity = await _entitySet.FindAsync(Tkey);
+                return entity;
 
             }
             catch (Exception exception)
@@ -82,18 +101,13 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 
         }
 
-        public virtual TModel Update<TModel>(TModel model)
+        public virtual TEntity Update(TEntity entity)
         {
 
             try
             {
-                var entity = _mapper.Map<TEntity>(model);
-
-                _context.Set<TEntity>().Attach(entity);
-                _context.Entry(entity).State = EntityState.Modified;
-
-                var updatedModel = _mapper.Map<TModel>(entity);
-                return updatedModel;
+                var updatedEntity = _entitySet.Update(entity);
+                return updatedEntity.Entity;
             }
             catch (Exception exception)
             {
@@ -106,7 +120,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(
+        public async Task<IEnumerable<TEntity>> GetAllAsync(
             Expression<Func<TEntity, bool>>? condition = null,
             Expression<Func<TEntity, object>>? orderBy = null,
             int? pageSize = null,
@@ -119,17 +133,15 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
                 ApplyCondition(ref query, condition);
                 ApplyOrderBy(ref query, orderBy, orderByDescending);
 
-                IEnumerable<TModel> resultModels;
+                IEnumerable<TEntity> resultModels;
 
                 if (pageSize.HasValue && pageSize.Value > 0 && pageIndex.HasValue && pageIndex.Value > 0)
                 {
-                    var paginationResult = await ApplyPagination(query, pageSize.Value, pageIndex.Value).ToListAsync();
-                    resultModels = _mapper.Map<IEnumerable<TEntity>, IEnumerable<TModel>>(paginationResult);
+                     resultModels = await ApplyPagination(query, pageSize.Value, pageIndex.Value).ToListAsync();
                 }
                 else
                 {
-                    var resultList = await query.ToListAsync();
-                    resultModels = _mapper.Map<IEnumerable<TEntity>, IEnumerable<TModel>>(resultList);
+                    resultModels = await query.ToListAsync();
                 }
 
                 return resultModels;

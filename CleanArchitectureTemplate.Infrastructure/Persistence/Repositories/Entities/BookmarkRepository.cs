@@ -5,9 +5,9 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class BookmarkRepository : BaseRepository<BookmarkEntity, Guid>, IBookmarkRepository
+    public class BookmarkRepository : BaseRepository<Bookmark, Guid>, IBookmarkRepository
     {
-        public BookmarkRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public BookmarkRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

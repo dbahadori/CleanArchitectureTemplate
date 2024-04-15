@@ -5,9 +5,9 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class UserProfileRepository : BaseRepository<UserProfileEntity, Guid>, IUserProfileRepository
+    public class UserProfileRepository : BaseRepository<UserProfile, Guid>, IUserProfileRepository
     {
-        public UserProfileRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public UserProfileRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

@@ -1,10 +1,9 @@
+using CleanArchitectureTemplate.Domain.Interfaces;
 
-
-namespace CleanArchitectureTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Entities
 {
-    public class Bookmark
+    public class Bookmark : AuditableEntity
     {
-        public Guid Id { get; set; }
 
         public string? Description { get; set; }
 

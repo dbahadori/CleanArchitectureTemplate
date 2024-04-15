@@ -1,5 +1,5 @@
 ﻿using CleanArchitectureTemplate.Domain.Enums;
-using CleanArchitectureTemplate.Domain.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

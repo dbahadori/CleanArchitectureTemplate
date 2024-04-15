@@ -5,9 +5,9 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class SettingRepository : BaseRepository<SettingEntity, Guid>, ISettingRepository
+    public class SettingRepository : BaseRepository<Setting, Guid>, ISettingRepository
     {
-        public SettingRepository(ApplicationDbContext context, IMapper mapper) : base(context,mapper)
+        public SettingRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

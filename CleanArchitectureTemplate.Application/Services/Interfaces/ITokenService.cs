@@ -1,6 +1,6 @@
 ﻿using CleanArchitectureTemplate.Domain.DTO;
+using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.Interfaces;
-using CleanArchitectureTemplate.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

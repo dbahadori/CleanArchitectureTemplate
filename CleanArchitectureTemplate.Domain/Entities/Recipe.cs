@@ -1,10 +1,11 @@
 using CleanArchitectureTemplate.Domain.Common.Validations;
 using CleanArchitectureTemplate.Domain.Interfaces.Models;
 using CleanArchitectureTemplate.Domain.Enums;
+using CleanArchitectureTemplate.Domain.Interfaces;
 
-namespace CleanArchitectureTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Entities
 {
-    public class Recipe: IRecipe
+    public class Recipe : AuditableEntity,  IRecipe
     {
         private readonly IModelValidator _modelValidator;
         public Recipe(IModelValidator modelValidator)
@@ -19,13 +20,12 @@ namespace CleanArchitectureTemplate.Domain.Models
             _ingredients = new List<Ingredient>();
 
         }
-        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Instructions { get; set; }
         public string? Description { get; set; }
         private readonly List<Ingredient> _ingredients;
         public IReadOnlyCollection<Ingredient> Ingredients => _ingredients.AsReadOnly();
-        
+
         public TimeSpan CookingTime { get; set; }
         public RecipeType Type { get; set; }
         public RecipeCategory Category { get; set; }
@@ -33,14 +33,14 @@ namespace CleanArchitectureTemplate.Domain.Models
         public Recipe AddIngredient(Ingredient ingredient)
         {
             _modelValidator.ValidateAndThrow(ingredient);
-            ingredient.RecipeId = this.Id;
-            this._ingredients.Add(ingredient);
+            ingredient.RecipeId = Id;
+            _ingredients.Add(ingredient);
             return this;
         }
         public Recipe AddIngredients(IList<Ingredient> ingredients)
         {
             foreach (var ingredient in ingredients)
-                this.AddIngredient(ingredient);
+                AddIngredient(ingredient);
             return this;
         }
         public void DisplayRecipe()
@@ -57,7 +57,7 @@ namespace CleanArchitectureTemplate.Domain.Models
         }
         public Recipe ClearIngredients()
         {
-            this._ingredients.Clear();
+            _ingredients.Clear();
             return this;
         }
     }

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using CleanArchitectureTemplate.Domain.Models;
+using CleanArchitectureTemplate.Domain.Entities;
 
 namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DomainModels
 {

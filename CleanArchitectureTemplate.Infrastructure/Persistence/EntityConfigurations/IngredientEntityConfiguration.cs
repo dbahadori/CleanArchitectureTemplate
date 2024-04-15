@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfiguration
 {
-    internal sealed class IngredientEntityConfiguration : object, IEntityTypeConfiguration<IngredientEntity>
+    internal sealed class IngredientEntityConfiguration : object, IEntityTypeConfiguration<Ingredient>
     {
-        public void Configure(EntityTypeBuilder<IngredientEntity> builder)
+        public void Configure(EntityTypeBuilder<Ingredient> builder)
         {
             #region Ingredient
             builder.HasKey(x => x.Id);

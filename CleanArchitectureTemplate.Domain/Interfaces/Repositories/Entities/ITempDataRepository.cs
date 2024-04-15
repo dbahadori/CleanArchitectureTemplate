@@ -3,7 +3,7 @@
 
 namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities
 {
-    public interface ITempDataRepository : IBaseRepository<TempDataEntity, Guid>
+    public interface ITempDataRepository : IBaseRepository<TempData, Guid>
     {
     }
 }

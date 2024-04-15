@@ -2,24 +2,22 @@
 using CleanArchitectureTemplate.Domain.Common.Exceptions;
 using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities;
-using CleanArchitectureTemplate.Domain.Models;
 using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 using CleanArchitectureTemplate.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class UserRepository : BaseRepository<UserEntity, Guid>, IUserRepository
+    public class UserRepository : BaseRepository<User, Guid>, IUserRepository
     {
-        public UserRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public UserRepository(ApplicationDbContext context) : base(context)
         {
         }
         public async Task CreateUserAsync(User user)
         {
             try
             {
-                var userEntity = _mapper.Map<UserEntity>(user);
-                await _context.AddAsync(userEntity);
+                await _context.AddAsync(user);
             }
             catch (Exception)
             {
@@ -41,13 +39,8 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
                .AsNoTracking()
                .FirstOrDefaultAsync();
 
-                if (user != null)
-                {
-                    var userModel = _mapper.Map<User>(user);
-                    return userModel;
-                }
 
-                return null;
+                return user;
             }
             catch (Exception exception )
             {
@@ -71,14 +64,8 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Email!.ToUpper() == email.ToUpper());
 
-                if (user != null)
-                {
-                    var userModel = _mapper.Map<User>(user);
-                    return userModel;
-                }
 
-
-                return null;
+                return user;
             }
             catch (Exception exception)
             {
@@ -101,13 +88,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-                if (user != null)
-                {
-                    var userModel = _mapper.Map<User>(user);
-                    return userModel;
-                }
-
-                return null;
+                return user;
 
             }
             catch (Exception exception)

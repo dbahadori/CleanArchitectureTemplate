@@ -1,5 +1,5 @@
-﻿using CleanArchitectureTemplate.Domain.Interfaces;
-using CleanArchitectureTemplate.Domain.Models;
+﻿using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

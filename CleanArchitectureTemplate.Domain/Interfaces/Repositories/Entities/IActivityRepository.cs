@@ -2,7 +2,7 @@
 
 namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities
 {
-    public interface IActivityRepository : IBaseRepository<ActivityEntity, Guid>
+    public interface IActivityRepository : IBaseRepository<Activity, Guid>
     {
 
     }

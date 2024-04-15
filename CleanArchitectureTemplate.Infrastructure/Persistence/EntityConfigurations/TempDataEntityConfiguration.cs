@@ -5,9 +5,9 @@ using CleanArchitectureTemplate.Domain.Entities;
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfigurations
 {
 
-    internal sealed class TempDataEntityConfiguration : object, IEntityTypeConfiguration<TempDataEntity>
+    internal sealed class TempDataEntityConfiguration : object, IEntityTypeConfiguration<TempData>
     {
-        public void Configure(EntityTypeBuilder<TempDataEntity> builder)
+        public void Configure(EntityTypeBuilder<TempData> builder)
         {
             builder.HasKey(x => x.Id);
         }

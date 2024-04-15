@@ -1,8 +1,7 @@
 ﻿using CleanArchitectureTemplate.Domain.Enums;
 using CleanArchitectureTemplate.Domain.Common.Validations;
-
-using CleanArchitectureTemplate.Domain.Models;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
+using CleanArchitectureTemplate.Domain.Entities;
 
 namespace CleanArchitectureTemplate.Application.Common.Implementation.Builders
 {

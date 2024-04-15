@@ -1,14 +1,14 @@
+using CleanArchitectureTemplate.Domain.Interfaces;
 
-namespace CleanArchitectureTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Entities
 {
-    public class Session
+    public class Session : AuditableEntity
     {
         public Session()
         {
             Settings = new List<Setting>();
         }
 
-        public Guid Id { get; set; }
         /// <summary>
         /// Gets or sets the firebase token.
         /// </summary>

@@ -1,9 +1,10 @@
 ﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
 using CleanArchitectureTemplate.Domain.Common.Services.Utilities;
+using CleanArchitectureTemplate.Domain.Interfaces;
 
-namespace CleanArchitectureTemplate.Domain.Models
+namespace CleanArchitectureTemplate.Domain.Entities
 {
-    public class User
+    public class User : AuditableEntity
     {
         private string? hashedPassword;
 
@@ -12,7 +13,6 @@ namespace CleanArchitectureTemplate.Domain.Models
             Sessions = new List<Session>();
             Roles = new List<Role>();
         }
-        public Guid Id { get; set; }
         public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? UserName { get; set; }
@@ -37,40 +37,40 @@ namespace CleanArchitectureTemplate.Domain.Models
         }
         public User AddSessions(Session session)
         {
-            this.Sessions.Add(session);
+            Sessions.Add(session);
             return this;
         }
 
         public bool UserHasRole(Role targetRole)
         {
-            return this.Roles.Any(role => role.Name.Equals(targetRole.ToString(), StringComparison.OrdinalIgnoreCase));
+            return Roles.Any(role => role.Name.Equals(targetRole.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         public User UpdateSession(Session session)
         {
-            var SessionIndex = this.Sessions.FindIndex(x => x.DeviceHash!.ToUpper() == session.DeviceHash!.ToUpper());
+            var SessionIndex = Sessions.FindIndex(x => x.DeviceHash!.ToUpper() == session.DeviceHash!.ToUpper());
             if (SessionIndex == -1)
                 throw new Exception(); // use proper exception 
 
-            this.Sessions[SessionIndex].LastLoggedindAt = session.LastLoggedindAt;
+            Sessions[SessionIndex].LastLoggedindAt = session.LastLoggedindAt;
             return this;
         }
 
         public User RemoveSessions(Session session)
         {
-            this.Sessions.Remove(session);
+            Sessions.Remove(session);
             return this;
         }
 
 
         public bool HasSession(Session session)
         {
-            return this.Sessions.Any(x => x.DeviceHash!.ToUpper() == session.DeviceHash!.ToUpper());
+            return Sessions.Any(x => x.DeviceHash!.ToUpper() == session.DeviceHash!.ToUpper());
         }
 
         public User AddProfile(UserProfile userProfile)
         {
-            userProfile.UserId = this.Id;
-            this.UserProfile = userProfile;
+            userProfile.UserId = Id;
+            UserProfile = userProfile;
             return this;
         }
 

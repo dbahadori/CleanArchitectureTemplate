@@ -10,11 +10,11 @@ namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories
 {
     public interface IBaseRepository<TEntity, in TKey> : IDisposable where TEntity : class
     {
-        Task<bool> AddAsync<TModel>(TModel model);
-        Task<bool> DeleteAsync<TModel>(TKey key);
-        Task<TModel> GetByIdAsync<TModel>(TKey key);
-        TModel Update<TModel>(TModel model);
-        Task<IEnumerable<TModel>> GetAllAsync<TModel>(Expression<Func<TEntity,
+        Task<bool> AddAsync(TEntity model);
+        Task<bool> DeleteAsync(TKey key);
+        Task<TEntity> GetByIdAsync(TKey key);
+        TEntity Update(TEntity entity);
+        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity,
             bool>>? condition = null,
             Expression<Func<TEntity,Object>>? orderBy = null,
             int? pageSize = null,

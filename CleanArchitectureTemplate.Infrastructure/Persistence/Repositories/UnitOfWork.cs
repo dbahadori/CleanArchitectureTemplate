@@ -11,7 +11,6 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
     {
         private readonly ApplicationDbContext _dbContext;
 
-        private readonly IMapper _mapper;
         private IActivityRepository? _activityRepository;
         private IBookmarkRepository? _bookmarkRepository;
         private IRecipeRepository? _recipeRepository;
@@ -23,21 +22,20 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
         private IRoleRepository? _roleRepository;
 
 
-        public UnitOfWork(ApplicationDbContext dbContext, IMapper mapper)
+        public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
-        public IActivityRepository ActivityRepository => _activityRepository ??= new ActivityRepository(_dbContext, _mapper);
-        public IBookmarkRepository BookmarkRepository => _bookmarkRepository ??= new BookmarkRepository(_dbContext, _mapper);
-        public IRecipeRepository RecipeRepository => _recipeRepository ??= new RecipeRepository(_dbContext, _mapper);
-        public IIngredientRepository IngredientRepository => _ingredientRepository ??= new IngredientRepository(_dbContext, _mapper);
-        public ISessionRepository SessionRepository => _sessionRepository ??= new SessionRepository(_dbContext, _mapper);
-        public ISettingRepository SettingRepository => _settingRepository ??= new SettingRepository(_dbContext, _mapper);
-        public IUserProfileRepository UserProfileRepository => _userProfileRepository ??= new UserProfileRepository(_dbContext, _mapper);
-        public IUserRepository UserRepository => _userRepository ??= new UserRepository(_dbContext, _mapper);
-        public IRoleRepository RoleRepository => _roleRepository ??= new RoleRepository(_dbContext, _mapper);
+        public IActivityRepository ActivityRepository => _activityRepository ??= new ActivityRepository(_dbContext);
+        public IBookmarkRepository BookmarkRepository => _bookmarkRepository ??= new BookmarkRepository(_dbContext);
+        public IRecipeRepository RecipeRepository => _recipeRepository ??= new RecipeRepository(_dbContext);
+        public IIngredientRepository IngredientRepository => _ingredientRepository ??= new IngredientRepository(_dbContext);
+        public ISessionRepository SessionRepository => _sessionRepository ??= new SessionRepository(_dbContext);
+        public ISettingRepository SettingRepository => _settingRepository ??= new SettingRepository(_dbContext);
+        public IUserProfileRepository UserProfileRepository => _userProfileRepository ??= new UserProfileRepository(_dbContext);
+        public IUserRepository UserRepository => _userRepository ??= new UserRepository(_dbContext);
+        public IRoleRepository RoleRepository => _roleRepository ??= new RoleRepository(_dbContext);
 
 
         public async Task CommitAsync()

@@ -5,9 +5,9 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class TempDataRepository : BaseRepository<TempDataEntity, Guid>, ITempDataRepository
+    public class TempDataRepository : BaseRepository<TempData, Guid>, ITempDataRepository
     {
-        public TempDataRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public TempDataRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

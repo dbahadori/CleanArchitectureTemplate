@@ -1,5 +1,5 @@
-﻿using CleanArchitectureTemplate.Domain.Enums;
-using CleanArchitectureTemplate.Domain.Models;
+﻿using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Domain.Enums;
 
 
 namespace CleanArchitectureTemplate.Application.Common.Interfaces.Builders

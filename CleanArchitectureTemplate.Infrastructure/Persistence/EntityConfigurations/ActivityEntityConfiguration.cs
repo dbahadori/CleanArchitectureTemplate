@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfiguration
 {
-    public sealed class ActivityEntityConfiguration : object, IEntityTypeConfiguration<ActivityEntity>
+    public sealed class ActivityEntityConfiguration : object, IEntityTypeConfiguration<Activity>
     {
-        public void Configure(EntityTypeBuilder<ActivityEntity> builder)
+        public void Configure(EntityTypeBuilder<Activity> builder)
         {
             builder.HasKey(x => x.Id);
 
