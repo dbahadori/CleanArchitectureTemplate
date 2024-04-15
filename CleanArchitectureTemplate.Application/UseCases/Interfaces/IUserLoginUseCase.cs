@@ -1,5 +1,5 @@
 ﻿using CleanArchitectureTemplate.Application.DTO.V1;
-using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

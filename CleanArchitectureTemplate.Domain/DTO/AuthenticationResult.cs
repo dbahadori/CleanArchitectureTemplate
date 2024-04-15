@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Domain.ValueObejects
+namespace CleanArchitectureTemplate.Domain.DTO
 {
     public class AuthenticationResult : BaseServiceResult
     {

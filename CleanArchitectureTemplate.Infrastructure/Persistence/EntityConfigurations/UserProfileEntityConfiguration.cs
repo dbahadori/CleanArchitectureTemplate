@@ -10,6 +10,9 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfigurati
         {
             builder.HasKey(x => x.Id);
 
+            //Address value object persisted as owned entity type supported since EF Core 2.0
+            builder
+                .OwnsOne(o => o.Address);
             #region BookMarks
             builder.HasMany(x => x.Bookmarks)
                 .WithOne(x=> x.UserProfile)

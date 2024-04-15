@@ -1,4 +1,4 @@
-﻿using CleanArchitectureTemplate.Domain.ValueObejects;
+﻿using CleanArchitectureTemplate.Domain.DTO;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

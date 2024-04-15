@@ -2,8 +2,8 @@
 using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
 using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using CleanArchitectureTemplate.Domain.DTO;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
-using CleanArchitectureTemplate.Domain.ValueObejects;
 using CleanArchitectureTemplate.Resources;
 
 namespace CleanArchitectureTemplate.Application.Services.Implementations

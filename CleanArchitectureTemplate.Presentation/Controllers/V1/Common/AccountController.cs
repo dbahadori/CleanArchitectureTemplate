@@ -1,7 +1,7 @@
 ﻿using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using CleanArchitectureTemplate.Domain.Common.Validations;
-using CleanArchitectureTemplate.Domain.ValueObejects;
+using CleanArchitectureTemplate.Domain.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

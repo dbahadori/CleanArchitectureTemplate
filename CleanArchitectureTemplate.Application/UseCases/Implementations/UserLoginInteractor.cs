@@ -5,10 +5,10 @@ using CleanArchitectureTemplate.Application.Services.Interfaces;
 using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
 using CleanArchitectureTemplate.Domain.Models;
-using CleanArchitectureTemplate.Domain.ValueObejects;
 using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
 using CleanArchitectureTemplate.Resources;
 using System;
+using CleanArchitectureTemplate.Domain.DTO;
 
 namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {

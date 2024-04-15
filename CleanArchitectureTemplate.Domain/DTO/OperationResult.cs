@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Domain.ValueObejects
+namespace CleanArchitectureTemplate.Domain.DTO
 {
     public class OperationResult
     {
@@ -42,9 +42,9 @@ namespace CleanArchitectureTemplate.Domain.ValueObejects
 
         public OperationResult(bool isSuccessful, T? data, Exception? exception)
         {
-            this.IsSuccessful = isSuccessful;
+            IsSuccessful = isSuccessful;
             Data = data;
-            this.Exception = exception;
+            Exception = exception;
         }
 
         public OperationResult(bool isSuccessful, T? data)

@@ -1,7 +1,7 @@
 ﻿using CleanArchitectureTemplate.Application.Common.Interfaces;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Domain.DTO;
 using CleanArchitectureTemplate.Domain.Models;
-using CleanArchitectureTemplate.Domain.ValueObejects;
 using CleanArchitectureTemplate.Infrastructure.Extentions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

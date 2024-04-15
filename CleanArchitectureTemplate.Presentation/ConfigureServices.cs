@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CleanArchitectureTemplate.Application.Common.Interfaces;
+using Microsoft.OpenApi.Models;
 
 namespace CleanArchitectureTemplate.Presentation
 
@@ -38,7 +39,18 @@ namespace CleanArchitectureTemplate.Presentation
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            { 
+                options.UseInlineDefinitionsForEnums();
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Clean Arcchitecure Template - HTTP API",
+                    Version = "v1",
+                    Description = "The Clean Architecture Template HTTP API"
+
+                });
+
+            });
 
             services.AddApiVersioningConfigured();
             services.AddCORSConfigured();

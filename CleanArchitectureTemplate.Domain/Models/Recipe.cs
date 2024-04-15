@@ -10,20 +10,22 @@ namespace CleanArchitectureTemplate.Domain.Models
         public Recipe(IModelValidator modelValidator)
         {
             _modelValidator = modelValidator;
-            Ingredients = new List<Ingredient>();
+            _ingredients = new List<Ingredient>();
 
         }
 
         public Recipe()
         {
-            Ingredients = new List<Ingredient>();
+            _ingredients = new List<Ingredient>();
 
         }
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Instructions { get; set; }
         public string? Description { get; set; }
-        public IList<Ingredient> Ingredients { get; private set; }
+        private readonly List<Ingredient> _ingredients;
+        public IReadOnlyCollection<Ingredient> Ingredients => _ingredients.AsReadOnly();
+        
         public TimeSpan CookingTime { get; set; }
         public RecipeType Type { get; set; }
         public RecipeCategory Category { get; set; }
@@ -32,7 +34,7 @@ namespace CleanArchitectureTemplate.Domain.Models
         {
             _modelValidator.ValidateAndThrow(ingredient);
             ingredient.RecipeId = this.Id;
-            this.Ingredients.Add(ingredient);
+            this._ingredients.Add(ingredient);
             return this;
         }
         public Recipe AddIngredients(IList<Ingredient> ingredients)
@@ -55,7 +57,7 @@ namespace CleanArchitectureTemplate.Domain.Models
         }
         public Recipe ClearIngredients()
         {
-            this.Ingredients.Clear();
+            this._ingredients.Clear();
             return this;
         }
     }

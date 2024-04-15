@@ -1,11 +1,11 @@
-﻿using CleanArchitectureTemplate.Domain.ValueObejects;
-using CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
+﻿using CleanArchitectureTemplate.Infrastructure.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
 using CleanArchitectureTemplate.Domain.Enums;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
 using CleanArchitectureTemplate.Application.DTO.V1.Admin;
 using CleanArchitectureTemplate.Resources;
+using CleanArchitectureTemplate.Domain.DTO;
 
 namespace CleanArchitectureTemplate.Infrastructure.Services
 {
