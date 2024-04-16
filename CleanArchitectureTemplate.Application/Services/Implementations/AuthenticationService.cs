@@ -25,7 +25,7 @@ namespace CleanArchitectureTemplate.Application.Services.Implementations
             var user = await _unitOfWork.UserRepository.FindByEmailAsync(email);
             if (user==null)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.UserWithEmailNotFound, email);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.UserWithEmailNotFound, email);
 
                 return new AuthenticationResult
                 {
@@ -37,7 +37,7 @@ namespace CleanArchitectureTemplate.Application.Services.Implementations
             var isValidPassword = user.ValidatePassword(password);
             if (!isValidPassword)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.PasswordNotCorrect, email);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.PasswordNotCorrect, email);
                 return new AuthenticationResult
                 {
                     Exception = new PasswordNotCorrectException()

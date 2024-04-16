@@ -21,7 +21,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             }
             catch (Exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringCreatingUser);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringCreatingUser);
                 throw new NotFoundException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage);
@@ -44,7 +44,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             }
             catch (Exception exception )
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalById);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalById);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -69,7 +69,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalByEmail);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalByEmail);
                  throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -94,7 +94,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             catch (Exception exception)
             {
 
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalById);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalById);
                  throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -115,7 +115,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             catch (Exception exception)
             {
 
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FaliedToCheckEmail);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FaliedToCheckEmail);
                 throw  new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)

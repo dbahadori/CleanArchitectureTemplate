@@ -73,9 +73,5 @@ namespace CleanArchitectureTemplate.Domain.DTO
         }
     }
 
-    public class OperationResult2 : OperationResult
-    {
-
-    }
 
 }

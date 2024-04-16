@@ -33,7 +33,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             // check user is Authenticated
             if (!authenticationResult.IsUserAuthenticated)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.UserWithEmailNotFound, input.Email);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.UserWithEmailNotFound, input.Email);
                 if (authenticationResult.AuthenticatedUser == null)
                 {
                     return OperationResult.Failure(
@@ -41,7 +41,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
                         .WithUserFriendlyMessage(localizedMessage)
                         .WithDeveloperDetail(defaultMessage));
                 }
-                (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.PasswordNotCorrect, input.Email);
+                (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.PasswordNotCorrect, input.Email);
                 return OperationResult.Failure(
                     new PasswordNotCorrectException()
                     .WithUserFriendlyMessage(localizedMessage)
@@ -53,7 +53,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             var tokenResult = await _tokenService.GenerateTokenAsync(authenticationResult.AuthenticatedUser!);
             if (!tokenResult.IsSuccess)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.GenerateTokenError);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.GenerateTokenError);
                 return OperationResult.Failure(
                     new TokenGenerationException()
                     .WithUserFriendlyMessage(localizedMessage)
@@ -95,7 +95,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             catch (Exception exception)
             {
                 _unitOfWork.Rollback();
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringUserLogin, input.Email);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserLogin, input.Email);
                 return OperationResult.Failure(
                     new ExistEmailException()
                     .WithUserFriendlyMessage(localizedMessage)

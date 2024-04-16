@@ -34,7 +34,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
                 var isEmailDuplicated = await _unitOfWork.UserRepository.IsEmailExist(input.Email);
                 if (isEmailDuplicated)
                 {
-                    var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ExistEmailBefore, input.Email);
+                    var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ExistEmailBefore, input.Email);
                     return OperationResult.Failure(new ExistEmailException(defaultMessage, localizedMessage));
 
                 }
@@ -63,7 +63,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             catch (Exception exception)
             {
                 _unitOfWork.Rollback();
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ErrorDuringRegistringUser, input.Email);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringRegistringUser, input.Email);
                 return OperationResult.Failure(
                      new ExistEmailException()
                     .WithUserFriendlyMessage(localizedMessage)

@@ -30,7 +30,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToAddEntity, typeof(TEntity).Name);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToAddEntity, typeof(TEntity).Name);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -53,7 +53,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -73,7 +73,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -92,7 +92,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToGetEntity, typeof(TEntity).Name);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToGetEntity, typeof(TEntity).Name);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -111,7 +111,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.UpdateEntityError, typeof(TEntity).Name);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.UpdateEntityError, typeof(TEntity).Name);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -148,7 +148,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToGetAllEntities);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToGetAllEntities);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -170,7 +170,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.FailedToGetEntity, entityName);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToGetEntity, entityName);
                 throw new RepositoryException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage)
@@ -199,7 +199,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
         {
             if (pageSize <= 0 || pageIndex <= 0)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.InvalidPageSizePageIndex);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.InvalidPageSizePageIndex);
                 throw new InvalidPageSizePageIndexException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage);

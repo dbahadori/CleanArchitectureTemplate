@@ -1,10 +1,6 @@
-﻿using CleanArchitectureTemplate.Domain.Entities;
-using CleanArchitectureTemplate.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CleanArchitectureTemplate.Domain.Common.Exceptions;
+using CleanArchitectureTemplate.Domain.Entities;
+using System.Security.Claims;
 
 namespace CleanArchitectureTemplate.Domain.DTO
 {
@@ -12,6 +8,7 @@ namespace CleanArchitectureTemplate.Domain.DTO
     {
         public bool IsUserAuthenticated { get; set; } = false;
         public User? AuthenticatedUser { get; set; }
-        public Exception? Exception { get; set; }
+        public CustomException? Exception { get; set; }
+        public IEnumerable<Claim> Claims { get; set; }
     }
 }

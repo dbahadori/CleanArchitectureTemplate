@@ -23,7 +23,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Services
                 var fileExtension = Path.GetExtension(file.FileName).ToLower();
                 if (!Enum.TryParse(fileExtension, out FileExtension extension))
                 {
-                    var (defaultMessage, localizedMessage) = ResourceHelper.GetErrorMessages(em => ErrorMessages.ExtentionNotSupported, extension);
+                    var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ExtentionNotSupported, extension);
                     return OperationResult.Failure(
                         new FileExtentionException()
                         .WithDeveloperDetail(localizedMessage)
