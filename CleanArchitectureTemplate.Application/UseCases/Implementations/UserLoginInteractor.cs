@@ -1,4 +1,4 @@
-﻿using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+﻿using CleanArchitectureTemplate.Application.Common.Exceptions;
 using CleanArchitectureTemplate.Application.Common.Interfaces;
 using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Application.Services.Interfaces;

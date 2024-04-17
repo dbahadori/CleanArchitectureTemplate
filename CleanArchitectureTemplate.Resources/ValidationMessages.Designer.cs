@@ -61,6 +61,33 @@ namespace CleanArchitectureTemplate.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Email {0} has been registerd before..
+        /// </summary>
+        public static string EmailIsDuplicated {
+            get {
+                return ResourceManager.GetString("EmailIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The format of email is not correct.
+        /// </summary>
+        public static string InvalidEmailFormat {
+            get {
+                return ResourceManager.GetString("InvalidEmailFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid password format. Passwords must be at least 8 characters long and contain at least one upper letter and one digit..
+        /// </summary>
+        public static string InvalidPasswordFormat {
+            get {
+                return ResourceManager.GetString("InvalidPasswordFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid recipe category..
         /// </summary>
         public static string InvalidRecipeCategory {
@@ -79,6 +106,24 @@ namespace CleanArchitectureTemplate.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Roles not found {}.
+        /// </summary>
+        public static string nonExistentRoles {
+            get {
+                return ResourceManager.GetString("nonExistentRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} must not be empty.
+        /// </summary>
+        public static string NotEmpty {
+            get {
+                return ResourceManager.GetString("NotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The recipe can not be empty..
         /// </summary>
         public static string RecipeCategoryNotEmpty {
@@ -93,6 +138,15 @@ namespace CleanArchitectureTemplate.Resources {
         public static string RecipeTypeNotEmpty {
             get {
                 return ResourceManager.GetString("RecipeTypeNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more validation failures have occurred..
+        /// </summary>
+        public static string ValidationErrorOccurred {
+            get {
+                return ResourceManager.GetString("ValidationErrorOccurred", resourceCulture);
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using CleanArchitectureTemplate.Presentation.Common.Exceptions;
-using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Application.Common.Exceptions;
 using CleanArchitectureTemplate.Domain.Common.Exceptions;
 using FluentValidation;
 using System.Text.Json;
@@ -19,10 +19,14 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
             _exceptionHandlers = new Dictionary<Type, Func<HttpContext, CustomException, Task>>();
 
             AddExceptionHandler<CustomValidationException>(HandleCustomValidationException);
-            AddExceptionHandler<NotFoundException>(HandleNotFoundException);
+            AddExceptionHandler<EntityNotFoundException>(HandleNotFoundException);
             AddExceptionHandler<ExistEmailException>(HandleExistEmailException);
             AddExceptionHandler<PasswordPatternException>(HandlePatternException);
             AddExceptionHandler<ForbiddenException>(HandleForbiddenException);
+            AddExceptionHandler<EntityCreationException>(HandleCustomValidationException);
+            AddExceptionHandler<NotFoundUserException>(HandleNotFoundException);
+            AddExceptionHandler<PasswordNotCorrectException>(HandleUnauthorizedException);
+
 
             // Configure default settings for JsonConvert
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
@@ -79,8 +83,6 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
                     Detail = null,
                     Instance = httpContext.Request.Path,
                     Extensions = null
-                  
-
                 };
                 httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 httpContext.Response.ContentType = "application/json";
@@ -93,14 +95,14 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
 
             var validationException = new CustomValidationException()
                 .WithParam(ex.Errors);
-            
+
 
             var details = new ValidationProblemDetails()
-            
+
             {
-                Type = validationException.Type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Type = string.IsNullOrEmpty(validationException.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : validationException.Type,
                 Status = StatusCodes.Status400BadRequest,
-                Title = validationException.UserFriendlyMessage, // User-friendly title
+                Title = validationException.UserFriendlyMessage,//ResourceHelper.GetErrorMessages(e=>ErrorMessages.), // User-friendly title
                 Detail = validationException.DeveloperDetail, // Developer detail
                 Instance = context.Request.Path
             };
@@ -126,7 +128,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
             var details = new ValidationProblemDetails()
 
             {
-                Type = ex.Type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Type = string.IsNullOrEmpty(ex.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : ex.Type,
                 Status = StatusCodes.Status400BadRequest,
                 Title = ex.UserFriendlyMessage, // User-friendly title
                 Detail = ex.DeveloperDetail, // Developer detail
@@ -154,7 +156,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
         {
             var details = new ProblemDetails
             {
-                Type = ex.Type ?? "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8",
+                Type = string.IsNullOrEmpty(ex.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : ex.Type,
                 Status = StatusCodes.Status409Conflict,
                 Title = ex.Message, // User-friendly title
                 Detail = ex.DeveloperDetail, // Developer detail
@@ -171,7 +173,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
             {
                 details.Extensions["param"] = ex.Param;
             }
-            
+
             context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
@@ -181,9 +183,9 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
         {
             var details = new ProblemDetails
             {
-                Type = ex.Type ?? "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4",
+                Type = string.IsNullOrEmpty(ex.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : ex.Type,
                 Status = StatusCodes.Status404NotFound,
-                Title = ex.Message, // User-friendly title
+                Title = ex.UserFriendlyMessage, // User-friendly title
                 Detail = ex.DeveloperDetail, // Developer detail
                 Instance = context.Request.Path
             };
@@ -209,7 +211,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
 
             var details = new ProblemDetails
             {
-                Type = ex.Type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Type = string.IsNullOrEmpty(ex.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : ex.Type,
                 Status = StatusCodes.Status400BadRequest,
                 Title = ex.Message, // User-friendly title
                 Detail = ex.DeveloperDetail, // Developer detail
@@ -236,9 +238,9 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
         {
             var details = new ProblemDetails
             {
-                Type = ex.Type ?? "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3",
+                Type = string.IsNullOrEmpty(ex.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : ex.Type,
                 Status = StatusCodes.Status403Forbidden,
-                Title = ex.Message, // User-friendly title
+                Title = ex.UserFriendlyMessage, // User-friendly title
                 Detail = ex.DeveloperDetail, // Developer detail
                 Instance = context.Request.Path
             };
@@ -257,6 +259,31 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
 
+        }
+        private async Task HandleUnauthorizedException(HttpContext context, CustomException ex)
+        {
+            var details = new ProblemDetails
+            {
+                Type = string.IsNullOrEmpty(ex.Type) ? "https://tools.ietf.org/html/rfc7231#section-6.5.1" : ex.Type,
+                Status = StatusCodes.Status401Unauthorized,
+                Title = ex.UserFriendlyMessage, // User-friendly title
+                Detail = ex.DeveloperDetail, // Developer detail
+                Instance = context.Request.Path
+            };
+
+            // Extract additional information from the exception
+            if (!string.IsNullOrEmpty(ex.ErrorCode))
+            {
+                details.Extensions["error_code"] = ex.ErrorCode;
+            }
+
+            if (ex.Param != null && ex.Param.Count > 0)
+            {
+                details.Extensions["param"] = ex.Param;
+            }
+            context.Response.StatusCode = details.Status ?? StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(details));
         }
 
     }

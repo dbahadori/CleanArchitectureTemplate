@@ -7,6 +7,9 @@ namespace CleanArchitectureTemplate.Domain.Entities
     {
         public ActivityType ActivityType { get; set; }
 
+        public Guid UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
+
+
     }
 }

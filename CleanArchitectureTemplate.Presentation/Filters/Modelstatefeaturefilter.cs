@@ -1,4 +1,4 @@
-﻿using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+﻿using CleanArchitectureTemplate.Application.Common.Exceptions;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

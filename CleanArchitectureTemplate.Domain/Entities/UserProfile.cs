@@ -16,7 +16,7 @@ namespace CleanArchitectureTemplate.Domain.Entities
         public Address Address { get; private set; }
 
         public IList<Bookmark> Bookmarks { get; private set; }
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; private set; }
 
 
     }

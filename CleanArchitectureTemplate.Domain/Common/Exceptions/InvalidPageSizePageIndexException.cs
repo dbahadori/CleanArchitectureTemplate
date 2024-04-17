@@ -15,41 +15,7 @@ namespace CleanArchitectureTemplate.Domain.Common.Exceptions
         {
         }
 
-        public InvalidPageSizePageIndexException WithUserFriendlyMessage(string userFriendlyMessage)
-        {
-            UserFriendlyMessage = userFriendlyMessage;
-            return this;
-        }
-
-        public InvalidPageSizePageIndexException WithDeveloperDetail(string developerDetail)
-        {
-            DeveloperDetail = developerDetail;
-            return this;
-        }
-
-        public InvalidPageSizePageIndexException WithType(string type)
-        {
-            Type = type;
-            return this;
-        }
-
-        public InvalidPageSizePageIndexException WithErrorCode(string errorCode)
-        {
-            ErrorCode = errorCode;
-            return this;
-        }
-
-        public InvalidPageSizePageIndexException WithInnerCustomException(Exception innerCustomException)
-        {
-            InnerCustomException = innerCustomException;
-            return this;
-        }
-
-        public InvalidPageSizePageIndexException WithParam(IDictionary<string, string[]> param)
-        {
-            Param = param;
-            return this;
-        }
+        
 
     }
 }

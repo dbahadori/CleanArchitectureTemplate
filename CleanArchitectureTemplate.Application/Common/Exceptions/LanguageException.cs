@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Domain.Common.Exceptions
+namespace CleanArchitectureTemplate.Application.Common.Exceptions
 {
-    public class ModelNotFoundException : CustomException
+    public class LanguageException : CustomException
     {
-
-        public ModelNotFoundException()
+        public LanguageException()
             : base(string.Empty, null)
         {
         }

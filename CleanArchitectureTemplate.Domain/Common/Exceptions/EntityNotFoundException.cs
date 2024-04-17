@@ -1,16 +1,16 @@
 ﻿
 namespace CleanArchitectureTemplate.Domain.Common.Exceptions;
 
-public class NotFoundException : CustomException
+public class EntityNotFoundException : CustomException
 {
 
-    public NotFoundException()
+    public EntityNotFoundException()
         : base(string.Empty, null)
     {
     }
 
-  
-    public NotFoundException(string resourceName, object key, string? userFriendlyMessage)
+
+    public EntityNotFoundException(string resourceName, object key, string? userFriendlyMessage)
         : base(userFriendlyMessage)
     {
         DeveloperDetail = $"Resource \"{resourceName}\" ({key}) was not found.";

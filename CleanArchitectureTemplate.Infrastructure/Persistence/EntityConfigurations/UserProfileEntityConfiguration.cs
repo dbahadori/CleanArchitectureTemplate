@@ -23,7 +23,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.EntityConfigurati
             #region Activities
             builder.HasMany(x => x.Activities)
                 .WithOne(x => x.UserProfile)
-                .HasForeignKey(x => x.UserProfile)
+                .HasForeignKey(x => x.UserProfileId)
                 .IsRequired(true);
             #endregion
 

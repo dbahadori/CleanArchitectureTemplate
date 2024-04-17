@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArchitectureTemplate.Application.Common.Implementation.Exceptions;
+using CleanArchitectureTemplate.Application.Common.Exceptions;
 using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
 using CleanArchitectureTemplate.Application.UseCases.Interfaces;

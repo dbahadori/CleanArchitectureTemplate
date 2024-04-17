@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Domain.Common.Exceptions
+namespace CleanArchitectureTemplate.Application.Common.Exceptions
 {
-    public class ModelNotFoundException : CustomException
+    public class SaveMediaInHostException : CustomException
     {
 
-        public ModelNotFoundException()
+        public SaveMediaInHostException()
             : base(string.Empty, null)
         {
         }
+
 
     }
 }

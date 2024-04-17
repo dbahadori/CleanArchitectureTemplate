@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Domain.Common.Exceptions
+namespace CleanArchitectureTemplate.Application.Common.Exceptions
 {
-    public class ModelNotFoundException : CustomException
+    public class PasswordPatternException : CustomException
     {
 
-        public ModelNotFoundException()
-            : base(string.Empty, null)
+        public PasswordPatternException()
+           : base(string.Empty, null)
         {
         }
+
 
     }
 }

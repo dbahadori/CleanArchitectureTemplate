@@ -117,16 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmailIsDuplicated" xml:space="preserve">
+    <value>This Email {0} has been registerd before.</value>
+  </data>
+  <data name="InvalidEmailFormat" xml:space="preserve">
+    <value>The format of email is not correct</value>
+  </data>
+  <data name="InvalidPasswordFormat" xml:space="preserve">
+    <value>Invalid password format. Passwords must be at least 8 characters long and contain at least one upper letter and one digit.</value>
+  </data>
   <data name="InvalidRecipeCategory" xml:space="preserve">
     <value>Invalid recipe category.</value>
   </data>
   <data name="InvalidRecipeType" xml:space="preserve">
     <value>Invalid recipe type.</value>
   </data>
+  <data name="nonExistentRoles" xml:space="preserve">
+    <value>Roles not found {}</value>
+  </data>
+  <data name="NotEmpty" xml:space="preserve">
+    <value>The {0} must not be empty</value>
+  </data>
   <data name="RecipeCategoryNotEmpty" xml:space="preserve">
     <value>The recipe can not be empty.</value>
   </data>
   <data name="RecipeTypeNotEmpty" xml:space="preserve">
     <value>The recipe type can not be empty.</value>
+  </data>
+  <data name="ValidationErrorOccurred" xml:space="preserve">
+    <value>One or more validation failures have occurred.</value>
   </data>
 </root>
