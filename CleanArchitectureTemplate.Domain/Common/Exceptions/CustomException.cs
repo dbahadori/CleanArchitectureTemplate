@@ -54,6 +54,12 @@ namespace CleanArchitectureTemplate.Domain.Common.Exceptions
             WithUserFriendlyMessage(LocalizedMessage);
             return this;
         }
+        public virtual CustomException WithMessage(string DefaultMessage)
+        {
+            WithDeveloperDetail(DefaultMessage);
+            WithUserFriendlyMessage(DefaultMessage);
+            return this;
+        }
         public virtual CustomException WithType(string type)
         {
             Type = type;

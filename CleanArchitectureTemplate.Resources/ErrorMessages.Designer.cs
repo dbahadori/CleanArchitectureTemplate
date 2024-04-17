@@ -234,9 +234,9 @@ namespace CleanArchitectureTemplate.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The specified page size or page index is invalid. Please provide valid values for the page size and page index..
         /// </summary>
-        public static string InvalidPageSizePageIndex {
+        public static string InvalidPageSizePageNumber {
             get {
-                return ResourceManager.GetString("InvalidPageSizePageIndex", resourceCulture);
+                return ResourceManager.GetString("InvalidPageSizePageNumber", resourceCulture);
             }
         }
         

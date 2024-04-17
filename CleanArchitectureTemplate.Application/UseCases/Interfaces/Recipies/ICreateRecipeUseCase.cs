@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using CleanArchitectureTemplate.Domain.DTO;
 
-namespace CleanArchitectureTemplate.Application.UseCases.Interfaces
+namespace CleanArchitectureTemplate.Application.UseCases.Interfaces.Recipies
 {
     public interface ICreateRecipeUseCase
     {
-        Task<OperationResult> ExecuteAsync(CreateRecipeInputModel inputMessage);
+        Task<OperationResult> ExecuteAsync(CreateRecipeRequestDTO inputMessage);
 
     }
 }

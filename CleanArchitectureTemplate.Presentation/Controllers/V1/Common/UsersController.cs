@@ -1,4 +1,5 @@
-﻿using CleanArchitectureTemplate.Application.UseCases.Interfaces;
+﻿using CleanArchitectureTemplate.Application.UseCases.Interfaces.Admin;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitectureTemplate.Domain.Common.Exceptions
 {
-    public class InvalidPageSizePageIndexException : CustomException
+    public class InvalidPageSizePageNumberException : CustomException
     {
 
 
-        public InvalidPageSizePageIndexException()
+        public InvalidPageSizePageNumberException()
             : base(string.Empty, null)
         {
         }

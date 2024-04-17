@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CleanArchitectureTemplate.Application.Common.Exceptions;
-using CleanArchitectureTemplate.Application.DTO.V1;
+using CleanArchitectureTemplate.Application.DTO.V1.AdminControlPanel;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
-using CleanArchitectureTemplate.Application.UseCases.Interfaces;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Admin;
 using CleanArchitectureTemplate.Domain.DTO;
 using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
@@ -26,7 +26,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             _mapper = mapper;
         }
 
-        public async Task<OperationResult> RegisterAsync(UserRegisterInputModel input)
+        public async Task<OperationResult> RegisterAsync(UserRegisterRequestDTO input)
         {
             try
             {

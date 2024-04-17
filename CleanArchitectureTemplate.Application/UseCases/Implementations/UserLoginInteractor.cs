@@ -1,13 +1,13 @@
 ﻿using CleanArchitectureTemplate.Application.Common.Exceptions;
 using CleanArchitectureTemplate.Application.Common.Interfaces;
-using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
-using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
 using CleanArchitectureTemplate.Resources;
 using System;
 using CleanArchitectureTemplate.Domain.DTO;
 using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Users;
+using CleanArchitectureTemplate.Application.DTO.V1.Users;
 
 namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {
@@ -26,7 +26,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<OperationResult> LoginAsync(UserLoginInputModel input)
+        public async Task<OperationResult> LoginAsync(UserLoginRequestDTO input)
         {
             var authenticationResult = await _authenticationService.AuthenticateUserAsync(input.Email, input.Password!);
 
@@ -85,7 +85,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
                 _unitOfWork.UserRepository.Update(authenticatedUser);
                 await _unitOfWork.CommitAsync();
                // var r = await _unitOfWork.UserRepository.SaveAsync();
-                return OperationResult<UserLoginOutputModel>.Success(new UserLoginOutputModel()
+                return OperationResult<UserLoginResponseDTO>.Success(new UserLoginResponseDTO()
                 {
                     Token = tokenResult.Token!,
                     Email = authenticatedUser.Email,

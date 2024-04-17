@@ -36,12 +36,12 @@ namespace CleanArchitectureTemplate.Infrastructure.Services
                     try
                     {
                         var result = fileParser.Parse(file);
-                        return OperationResult<IEnumerable<FileContentOutputModel>>.Success(result);
+                        return OperationResult<IEnumerable<FileContentResponseDTO>>.Success(result);
 
                     }
                     catch (Exception exception)
                     {
-                        return OperationResult<IEnumerable<FileContentOutputModel>>.Failure(exception);
+                        return OperationResult<IEnumerable<FileContentResponseDTO>>.Failure(exception);
                     }
                     
                 }

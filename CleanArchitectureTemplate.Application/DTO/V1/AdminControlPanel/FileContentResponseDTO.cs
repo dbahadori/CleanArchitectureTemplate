@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitectureTemplate.Application.DTO.V1.Admin
 {
-    public class FileContentOutputModel
+    public class FileContentResponseDTO
     {
         public required string Instructions { get; set; }
 

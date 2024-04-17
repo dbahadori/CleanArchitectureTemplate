@@ -28,19 +28,17 @@ var infrastructureConfiguration = builder.Configuration
     .SetBasePath(infrastructureDirectory!)
     .AddJsonFile("Infrastructure_settings.json", optional: false, reloadOnChange: true)
     .AddJsonFile("serilog.config.json", optional: false, reloadOnChange: true)
-
     .Build();
 
 // configuring Serilog as the logging provider for the application's host
-
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(infrastructureConfiguration));
 
 // Add services to the container.
-
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.DefaultIgnoreCondition= JsonIgnoreCondition.WhenWritingNull;
 }); 
+
 builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices(infrastructureConfiguration);

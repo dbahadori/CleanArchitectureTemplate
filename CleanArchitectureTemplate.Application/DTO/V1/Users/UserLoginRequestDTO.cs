@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Application.DTO.V1
+namespace CleanArchitectureTemplate.Application.DTO.V1.Users
 {
-    public class UserLoginInputModel
+    public class UserLoginRequestDTO
     {
         public required string Email { get; set; }
         public string? Password { get; set; }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureTemplate.Application.DTO.V1
+namespace CleanArchitectureTemplate.Application.DTO.V1.AdminControlPanel
 {
-    public class UserRegisterInputModel
+    public class UserRegisterRequestDTO
     {
         public required string FullName { get; set; }
         public required string Email { get; set; }

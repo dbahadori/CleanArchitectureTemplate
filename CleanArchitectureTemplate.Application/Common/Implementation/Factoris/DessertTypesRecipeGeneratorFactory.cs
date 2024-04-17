@@ -1,4 +1,5 @@
-﻿using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+﻿using CleanArchitectureTemplate.Application.Common.Exceptions;
+using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 using CleanArchitectureTemplate.Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,8 @@ namespace CleanArchitectureTemplate.Application.Common.Implementation.Factories
             var recipeGenerator = _serviceProvider.GetKeyedService<IDessertRecipeGenerator>(recipeType);
             if (recipeGenerator != null)
                 return recipeGenerator;
-            throw new ArgumentException("Invalid Recipe type.");
+            throw new InvalidRecipeTypeExcepton()
+                .WithMessage("Invalid Recipe type.");
         }
     }
 }

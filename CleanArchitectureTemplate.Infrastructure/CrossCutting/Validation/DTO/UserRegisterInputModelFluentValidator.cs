@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using CleanArchitectureTemplate.Application.DTO.V1;
 using CleanArchitectureTemplate.Constants;
+using CleanArchitectureTemplate.Application.DTO.V1.AdminControlPanel;
 
 namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DTO
 {
-    public class UserRegisterInputModelFluentValidator : AbstractValidator<UserRegisterInputModel>
+    public class UserRegisterInputModelFluentValidator : AbstractValidator<UserRegisterRequestDTO>
     {
         public UserRegisterInputModelFluentValidator()
         {

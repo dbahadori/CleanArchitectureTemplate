@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitectureTemplate.Application.DTO.V2
 {
-    public class CreateRecipeInputModel
+    public class CreateRecipeRequestDTO
     {
         public required string RecipeCategory { get; set; }
         public required string RecipeType { get; set; }

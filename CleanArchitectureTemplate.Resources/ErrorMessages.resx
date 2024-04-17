@@ -174,7 +174,7 @@
   <data name="GenerateTokenError" xml:space="preserve">
     <value>An error occurred during the token generation process.</value>
   </data>
-  <data name="InvalidPageSizePageIndex" xml:space="preserve">
+  <data name="InvalidPageSizePageNumber" xml:space="preserve">
     <value>The specified page size or page index is invalid. Please provide valid values for the page size and page index.</value>
   </data>
   <data name="LanguageNotSupported" xml:space="preserve">

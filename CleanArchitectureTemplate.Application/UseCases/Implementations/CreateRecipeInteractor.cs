@@ -2,8 +2,10 @@
 using CleanArchitectureTemplate.Domain.Enums;
 using CleanArchitectureTemplate.Domain.Interfaces.Repositories;
 using CleanArchitectureTemplate.Application.DTO.V2;
-using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using CleanArchitectureTemplate.Domain.DTO;
+using CleanArchitectureTemplate.Application.Common.Exceptions;
+using CleanArchitectureTemplate.Resources;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Recipies;
 
 namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {
@@ -17,7 +19,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             _recipeGeneratorFactoryProvider = recipeGeneratorFactoryProvider;
             _unitOfWork = unitOfWork;
         }
-        public async Task<OperationResult> ExecuteAsync(CreateRecipeInputModel inputMessage)
+        public async Task<OperationResult> ExecuteAsync(CreateRecipeRequestDTO inputMessage)
         {
             try
             {

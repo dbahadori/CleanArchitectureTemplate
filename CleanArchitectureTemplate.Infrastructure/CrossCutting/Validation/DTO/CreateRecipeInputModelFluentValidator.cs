@@ -11,7 +11,7 @@ using CleanArchitectureTemplate.Domain.Enums;
 
 namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DTO
 {
-    public class CreateRecipeInputModelFluentValidator : AbstractValidator<CreateRecipeInputModel>
+    public class CreateRecipeInputModelFluentValidator : AbstractValidator<CreateRecipeRequestDTO>
     {
         public CreateRecipeInputModelFluentValidator()
         {

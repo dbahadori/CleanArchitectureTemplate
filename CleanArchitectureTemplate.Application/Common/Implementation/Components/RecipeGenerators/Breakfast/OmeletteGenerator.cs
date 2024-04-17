@@ -2,6 +2,7 @@
 using CleanArchitectureTemplate.Domain.Interfaces.Models;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+using CleanArchitectureTemplate.Domain.Entities;
 
 namespace CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Breakfast
 {
@@ -16,7 +17,7 @@ namespace CleanArchitectureTemplate.Application.Common.Implementation.Components
             _ingredientBuilder = ingredientBuilder;
         }
 
-        public IRecipe Generate()
+        public Recipe Generate()
         {
             var eggs = _ingredientBuilder
                 .WithId(Guid.NewGuid())

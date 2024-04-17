@@ -1,10 +1,10 @@
-﻿using CleanArchitectureTemplate.Application.DTO.V1;
+﻿using CleanArchitectureTemplate.Application.DTO.V1.Users;
 using CleanArchitectureTemplate.Constants;
 using FluentValidation;
 
 namespace CleanArchitectureTemplate.Infrastructure.CrossCutting.Validation.DTO
 {
-    internal class UserLoginInputMessageFluentValidator : AbstractValidator<UserLoginInputModel>
+    internal class UserLoginInputMessageFluentValidator : AbstractValidator<UserLoginRequestDTO>
     {
         public UserLoginInputMessageFluentValidator()
         {

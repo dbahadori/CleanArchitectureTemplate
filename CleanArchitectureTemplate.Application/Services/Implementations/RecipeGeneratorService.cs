@@ -2,6 +2,7 @@
 using CleanArchitectureTemplate.Application.Common.Interfaces.Components;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Factories;
 using CleanArchitectureTemplate.Application.Services.Interfaces;
+using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.Enums;
 using CleanArchitectureTemplate.Domain.Interfaces.Models;
 
@@ -16,7 +17,7 @@ namespace CleanArchitectureTemplate.Application.Services.Implementations
             _recipeGeneratorFactoryProvider = recipeGeneratorFactoryProvider;
         }
 
-        public IRecipe Generate(RecipeType recipeType, RecipeCategory recipeCategory)
+        public Recipe Generate(RecipeType recipeType, RecipeCategory recipeCategory)
         {
             try
             {

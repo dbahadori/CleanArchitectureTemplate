@@ -5,6 +5,6 @@ namespace CleanArchitectureTemplate.Application.Common.Interfaces
 {
     public interface IHttpFileParser
     {
-        IEnumerable<FileContentOutputModel> Parse(IFormFile file);
+        IEnumerable<FileContentResponseDTO> Parse(IFormFile file);
     }
 }

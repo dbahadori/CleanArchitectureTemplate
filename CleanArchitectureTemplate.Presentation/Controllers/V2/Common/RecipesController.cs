@@ -1,9 +1,9 @@
 ﻿using CleanArchitectureTemplate.Domain.Common.Validations;
 using CleanArchitectureTemplate.Presentation.Controllers.V1.Common;
 using CleanArchitectureTemplate.Application.DTO.V2;
-using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Recipies;
 
 namespace CleanArchitectureTemplate.Presentation.Controllers.V2.Common
 {
@@ -24,9 +24,10 @@ namespace CleanArchitectureTemplate.Presentation.Controllers.V2.Common
             _logger = logger;
         }
         [HttpPost("")]
-        public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeInputModel recipeModel) { 
+        public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequestDTO recipeModel) { 
             
             _modelValidator.ValidateAndThrow(recipeModel);
+
             try
             {
                 var result = await _createRecipe.ExecuteAsync(recipeModel);

@@ -6,7 +6,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Common.Components
 {
     internal class PDFFileFromHttpRequestParser : IHttpFileParser
     {
-        public IEnumerable<FileContentOutputModel> Parse(IFormFile file)
+        public IEnumerable<FileContentResponseDTO> Parse(IFormFile file)
         {
             throw new NotImplementedException();
         }

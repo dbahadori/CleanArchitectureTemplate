@@ -10,7 +10,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Common.Components
 {
     public class ExcelFileFromHttpRequestParser : IHttpFileParser
     {
-        public IEnumerable<FileContentOutputModel> Parse(IFormFile file)
+        public IEnumerable<FileContentResponseDTO> Parse(IFormFile file)
         {
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -76,13 +76,13 @@ namespace CleanArchitectureTemplate.Infrastructure.Common.Components
             else return true;
 
         }
-        private IEnumerable<FileContentOutputModel> GenerateOutputFromSheet(Dictionary<int, List<Tuple<int, object>>> sheet)
+        private IEnumerable<FileContentResponseDTO> GenerateOutputFromSheet(Dictionary<int, List<Tuple<int, object>>> sheet)
         {
             // remove header
             var content = sheet.Values.ToList();
             content.RemoveAt(0);
 
-            var outputModel = content.Select(content => new FileContentOutputModel()
+            var outputModel = content.Select(content => new FileContentResponseDTO()
             {
                 Instructions = content[0].Item2?.ToString()!
 

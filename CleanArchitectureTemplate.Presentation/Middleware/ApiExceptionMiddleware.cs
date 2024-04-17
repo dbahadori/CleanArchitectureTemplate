@@ -19,6 +19,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
             _exceptionHandlers = new Dictionary<Type, Func<HttpContext, CustomException, Task>>();
 
             AddExceptionHandler<CustomValidationException>(HandleCustomValidationException);
+            AddExceptionHandler<InvalidRecipeTypeExcepton>(HandleCustomValidationException);
             AddExceptionHandler<EntityNotFoundException>(HandleNotFoundException);
             AddExceptionHandler<ExistEmailException>(HandleExistEmailException);
             AddExceptionHandler<PasswordPatternException>(HandlePatternException);
@@ -72,7 +73,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
                 await _exceptionHandlers[type].Invoke(httpContext, (CustomException)exception);
                 return;
             }
-
+                
             if (!httpContext.Response.HasStarted)
             {   // log the exception
                 var details = new ProblemDetails()

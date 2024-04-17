@@ -1,5 +1,7 @@
-﻿using CleanArchitectureTemplate.Application.DTO.V1;
-using CleanArchitectureTemplate.Application.UseCases.Interfaces;
+﻿using CleanArchitectureTemplate.Application.DTO.V1.AdminControlPanel;
+using CleanArchitectureTemplate.Application.DTO.V1.Users;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Admin;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Users;
 using CleanArchitectureTemplate.Domain.Common.Validations;
 using CleanArchitectureTemplate.Domain.DTO;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +35,7 @@ namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginInputModel request)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestDTO request)
         {
             // Validation
             _modelValidator.ValidateAndThrow(request);
@@ -45,7 +47,7 @@ namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common
                 if (!loginResult.IsSuccessful)
                     throw loginResult.Exception!;
 
-                var result = loginResult as OperationResult<UserLoginOutputModel>;
+                var result = loginResult as OperationResult<UserLoginResponseDTO>;
                 return Ok(result!.Data!);
             }
             catch (Exception)
@@ -55,7 +57,7 @@ namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterInputModel request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequestDTO request)
         {
             // Validation
             _modelValidator.ValidateAndThrow(request);

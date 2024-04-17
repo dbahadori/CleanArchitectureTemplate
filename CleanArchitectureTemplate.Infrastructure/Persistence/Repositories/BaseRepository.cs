@@ -199,8 +199,8 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
         {
             if (pageSize <= 0 || pageIndex <= 0)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.InvalidPageSizePageIndex);
-                throw new InvalidPageSizePageIndexException()
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.InvalidPageSizePageNumber);
+                throw new InvalidPageSizePageNumberException()
                     .WithUserFriendlyMessage(localizedMessage)
                     .WithDeveloperDetail(defaultMessage);
             }

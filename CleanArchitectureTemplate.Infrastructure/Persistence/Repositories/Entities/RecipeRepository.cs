@@ -6,7 +6,7 @@ using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Entities
 {
-    public class RecipeRepository : BaseRepository<IRecipe, Guid>, IRecipeRepository
+    public class RecipeRepository : BaseRepository<Recipe, Guid>, IRecipeRepository
     {
         public RecipeRepository(ApplicationDbContext context) : base(context)
         {

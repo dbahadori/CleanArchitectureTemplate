@@ -8,7 +8,6 @@ using CleanArchitectureTemplate.Application.Services.Implementations;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Builders;
 using CleanArchitectureTemplate.Application.Common.Implementation.Builders;
 using CleanArchitectureTemplate.Application.UseCases.Implementations;
-using CleanArchitectureTemplate.Application.UseCases.Interfaces;
 using Microsoft.Extensions.Options;
 using CleanArchitectureTemplate.Domain.Enums;
 using CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.Beverage;
@@ -17,6 +16,9 @@ using CleanArchitectureTemplate.Application.Common.Implementation.Components.Rec
 using AutoMapper;
 using CleanArchitectureTemplate.Application.Common.Implementation.Components.RecipeGenerators.MainCourse;
 using CleanArchitectureTemplate.Application.Common.Interfaces.Components.RecipeGenerators;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Recipies;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Users;
+using CleanArchitectureTemplate.Application.UseCases.Interfaces.Admin;
 
 namespace CleanArchitectureTemplate.Application.Extensions
 {
