@@ -11,7 +11,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Interfaces.Admin
 {
     public interface IUserRegisterUseCase
     {
-        Task<OperationResult> RegisterAsync(UserRegisterRequestDTO input);
+        Task<OperationResult> RegisterAsync(UserRegisterRequestDTO input, CancellationToken cancellationToken);
 
     }
 }

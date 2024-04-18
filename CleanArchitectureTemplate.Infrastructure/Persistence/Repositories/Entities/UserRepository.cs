@@ -13,45 +13,6 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
         public UserRepository(ApplicationDbContext context) : base(context)
         {
         }
-        public async Task CreateUserAsync(User user)
-        {
-            try
-            {
-                await _context.AddAsync(user);
-            }
-            catch (Exception)
-            {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringCreatingUser);
-                throw new NotFoundException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage);
-            }
-            
-        }
-
-        public async Task<User> FindByIdAsync(Guid userId)
-        {
-            try
-            {
-                var user = await _context.Users
-               .Include(x => x.Roles)
-               .Where(x => x.Id == userId)
-               .AsNoTracking()
-               .FirstOrDefaultAsync();
-
-
-                return user;
-            }
-            catch (Exception exception )
-            {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalById);
-                throw new RepositoryException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
-                    .WithInnerCustomException(exception );
-            }
-           
-        }
 
         public async Task<User?> FindByEmailAsync(string email)
         {
@@ -60,8 +21,7 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
                 if (string.IsNullOrWhiteSpace(email))
                     throw new ArgumentNullException();
 
-                var user = await _context.Users
-                    .AsNoTracking()
+                var user = await _dbContext.Users
                     .FirstOrDefaultAsync(x => x.Email!.ToUpper() == email.ToUpper());
 
 
@@ -82,10 +42,9 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
         {
             try
             {
-                var user = await _context.Users
+                var user = await _dbContext.Users
                 .Include(x => x.UserProfile)
                 .Where(x => x.Id == userId)
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
                 return user;
@@ -103,13 +62,13 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             
         }
 
-        public async Task<bool> IsEmailExist(string email)
+        public async Task<bool> IsEmailExistAsync(string email, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentNullException();
             try
             {
-                var userExist = await _context.Users.AsNoTracking().AnyAsync(x => x.Email!.ToUpper() == email.ToUpper());
+                var userExist = await base.ExistsWithConditionsAsync(x => x.Email!.ToUpper() == email.ToUpper(), cancellationToken);
                 return userExist;
             }
             catch (Exception exception)
@@ -123,5 +82,32 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories.Enti
             }
 
         }
+
+        public async Task<User?> GetUserWithRolesByUsernameAsync(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userName))
+                    throw new ArgumentNullException(nameof(userName));
+
+                var user = await _dbContext.Users
+                    .AsNoTracking()
+                    .Include(x => x.Roles)
+                    .Where(x => x.UserName!.ToUpper() == userName.ToUpper())
+                    .FirstOrDefaultAsync();
+
+
+                return user;
+            }
+            catch (Exception exception)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserRetrievalByEmail);
+                throw new RepositoryException()
+                   .WithUserFriendlyMessage(localizedMessage)
+                   .WithDeveloperDetail(defaultMessage)
+                   .WithInnerCustomException(exception);
+            }
+        }
+
     }
 }

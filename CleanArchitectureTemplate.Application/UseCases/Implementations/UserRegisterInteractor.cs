@@ -26,12 +26,12 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
             _mapper = mapper;
         }
 
-        public async Task<OperationResult> RegisterAsync(UserRegisterRequestDTO input)
+        public async Task<OperationResult> RegisterAsync(UserRegisterRequestDTO input, CancellationToken cancellationToken)
         {
             try
             {
                 // Check Exist User with this email
-                var isEmailDuplicated = await _unitOfWork.UserRepository.IsEmailExist(input.Email);
+                var isEmailDuplicated = await _unitOfWork.UserRepository.IsEmailExistAsync(input.Email, cancellationToken);
                 if (isEmailDuplicated)
                 {
                     var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ExistEmailBefore, input.Email);
@@ -54,7 +54,7 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
                 };
 
                 user.AddProfile(userProfile);
-                await _unitOfWork.UserRepository.CreateUserAsync(user);
+                await _unitOfWork.UserRepository.AddAsync(user);
                 await _unitOfWork.CommitAsync();
 
                 return OperationResult.Success();

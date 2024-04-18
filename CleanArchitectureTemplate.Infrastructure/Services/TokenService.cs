@@ -21,35 +21,28 @@ namespace CleanArchitectureTemplate.Infrastructure.Services
             _dateTime = dateTime;
         }
 
-        public Task<TokenServiceResult> GenerateTokenAsync(User user, long? expireDate)
+        public Task<TokenServiceResult> GenerateTokenAsync(IEnumerable<Claim> claims, long? expireDate)
         {
             try
             {
                 // ALGORITHM & TOKEN TYPE
-                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
-                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-                var claims = new[]
-                {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.Id.ToString())
-                };
+                var secretKey = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+                var securityKey = new SymmetricSecurityKey(secretKey!);
+                var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
                 DateTime ExpireDate;
                 if (expireDate.HasValue && expireDate.Value > 0)
                     ExpireDate = expireDate.ToDateTime();
 
                 else
-                    ExpireDate = _dateTime.DateTimeNow;
+                    ExpireDate = _dateTime.DateTimeNow.AddHours(1);
 
                 var token = new JwtSecurityToken(
                     issuer: _config["Jwt:Issuer"],
                     audience: _config["Jwt:Issuer"],
                     claims,
                     expires: ExpireDate,
-                    signingCredentials: credentials);
+                    signingCredentials: signingCredentials);
 
                 var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
 

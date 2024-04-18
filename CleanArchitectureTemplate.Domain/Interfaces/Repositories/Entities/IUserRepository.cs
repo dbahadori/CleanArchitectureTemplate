@@ -1,15 +1,19 @@
 ﻿using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.ValueObejects;
+using Ticketing.Domain.Interfaces.Repositories;
 
 
 namespace CleanArchitectureTemplate.Domain.Interfaces.Repositories.Entities
 {
-    public interface IUserRepository : IBaseRepository<User, Guid>
+    public interface IUserRepository :
+        IReadableRepository<User, Guid>,
+        IWritableRepository<User, Guid>,
+        IPaginatedRepository<User>,
+        IExistenceRepository<User, Guid>
     {
-        Task CreateUserAsync(User user);
-        Task<User> FindByIdAsync(Guid userId);
-        Task<User> FindByEmailAsync(string email);
+        Task<User?> FindByEmailAsync(string email);
         Task<User> GetUserWithProfile(Guid userId);
-        Task<bool> IsEmailExist(string email);
+        Task<bool> IsEmailExistAsync(string email, CancellationToken cancellationToken);
+        Task<User?> GetUserWithRolesByUsernameAsync(string userName);
     }
 }

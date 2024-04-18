@@ -38,6 +38,10 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
         public IRoleRepository RoleRepository => _roleRepository ??= new RoleRepository(_dbContext);
 
 
+        public void Commit()
+        {
+            _dbContext.SaveChanges();
+        }
         public async Task CommitAsync()
         {
             await _dbContext.SaveChangesAsync();
@@ -54,7 +58,27 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
                 }
             }
         }
+        public void DetachRetrievedEntities(IEnumerable<object> entities)
+        {
+            foreach (var entity in entities)
+            {
+                var entry = _dbContext.Entry(entity);
 
+                // Check if the entity was loaded from the database
+                if (entry.State != EntityState.Detached)
+                {
+                    entry.State = EntityState.Detached;
+                }
+            }
+        }
+
+        public void DetachAllEntities()
+        {
+            foreach (var entry in _dbContext.ChangeTracker.Entries())
+            {
+                entry.State = EntityState.Detached;
+            }
+        }
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

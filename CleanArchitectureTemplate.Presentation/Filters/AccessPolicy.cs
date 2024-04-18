@@ -37,7 +37,7 @@ namespace CleanArchitectureTemplate.Presentation.Filters
                         .WithUserFriendlyMessage("User Don't Access to this Resourse")
                         .WithDeveloperDetail("User Don't Access to this Resourse");
 
-                var user = await _unitOfWork.UserRepository.FindByIdAsync(new Guid(userId));
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(new Guid(userId));
                 if (user==null)
                     throw new ForbiddenException()
                         .WithUserFriendlyMessage("User Don't Access to this Resourse")

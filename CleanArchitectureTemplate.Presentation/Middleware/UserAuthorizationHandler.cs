@@ -20,7 +20,7 @@ namespace CleanArchitectureTemplate.Presentation.Middleware
 
             else
             {
-                var user = await _unitOfWork.UserRepository.FindByIdAsync(new Guid(userId));
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(new Guid(userId));
                 if (user != null)
                     context.Succeed(requirement);
                 else

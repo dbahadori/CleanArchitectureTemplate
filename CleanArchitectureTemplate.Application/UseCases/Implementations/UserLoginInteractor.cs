@@ -8,6 +8,7 @@ using CleanArchitectureTemplate.Domain.DTO;
 using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Application.UseCases.Interfaces.Users;
 using CleanArchitectureTemplate.Application.DTO.V1.Users;
+using FluentValidation;
 
 namespace CleanArchitectureTemplate.Application.UseCases.Implementations
 {
@@ -17,89 +18,84 @@ namespace CleanArchitectureTemplate.Application.UseCases.Implementations
         private readonly IAuthenticationService _authenticationService;
         private readonly IDateTime _dateTime;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICurrentUserService _currentUserService;
 
-        public UserLoginInteractor(ITokenService tokenService, IAuthenticationService authenticationService, IDateTime dateTime, IUnitOfWork unitOfWork)
+        public UserLoginInteractor(
+            ITokenService tokenService,
+            IAuthenticationService authenticationService,
+            IDateTime dateTime,
+            IUnitOfWork unitOfWork,
+            ICurrentUserService currentUserService
+            )
         {
             _tokenService = tokenService;
             _authenticationService = authenticationService;
             _dateTime = dateTime;
             _unitOfWork = unitOfWork;
+            _currentUserService = currentUserService;
         }
 
-        public async Task<OperationResult> LoginAsync(UserLoginRequestDTO input)
+        public async Task<OperationResult> LoginAsync(UserLoginRequestDTO request)
         {
-            var authenticationResult = await _authenticationService.AuthenticateUserAsync(input.Email, input.Password!);
+            var authenticationResult = await _authenticationService.AuthenticateUserAsync(request.Email, request.Password!);
 
             // check user is Authenticated
             if (!authenticationResult.IsUserAuthenticated)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.UserWithEmailNotFound, input.Email);
-                if (authenticationResult.AuthenticatedUser == null)
-                {
-                    return OperationResult.Failure(
-                        new NotFoundUserException()
-                        .WithUserFriendlyMessage(localizedMessage)
-                        .WithDeveloperDetail(defaultMessage));
-                }
-                (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.PasswordNotCorrect, input.Email);
-                return OperationResult.Failure(
-                    new PasswordNotCorrectException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage));
+                return OperationResult.Failure(exception: authenticationResult.Exception);
+
             }
-
-
+            var claims = authenticationResult.Claims;
             // Create JWT Token for user
-            var tokenResult = await _tokenService.GenerateTokenAsync(authenticationResult.AuthenticatedUser!);
+            var tokenResult = await _tokenService.GenerateTokenAsync(claims);
             if (!tokenResult.IsSuccess)
             {
                 var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.GenerateTokenError);
                 return OperationResult.Failure(
                     new TokenGenerationException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
+                    .WithMessage(defaultMessage, localizedMessage)
                     .WithInnerCustomException(tokenResult.Exception));
 
             }
+            var currentUserId = _currentUserService.UserId;
 
             var authenticatedUser = authenticationResult.AuthenticatedUser;
 
             // Create or Update User Session
-            var session = new Session()
+            var Session = new Session()
             {
-                Device = input.Device,
-                DeviceHash = input.DeviceHash,
-                FireBaseToken = input.FireBaseToken,
                 LastLoggedindAt = _dateTime.TimeStampNow
             };
 
 
             // Update or Add
-            if (!authenticatedUser!.HasSession(session))
-                authenticatedUser.AddSessions(session);
+            if (!authenticatedUser!.HasSession(Session))
+                authenticatedUser.AddSessions(Session);
             else
-                authenticatedUser.UpdateSession(session);
+                authenticatedUser.UpdateSession(Session);
 
             try
             {
-                _unitOfWork.UserRepository.Update(authenticatedUser);
+                var user =  _unitOfWork.UserRepository.Update(authenticatedUser);
                 await _unitOfWork.CommitAsync();
-               // var r = await _unitOfWork.UserRepository.SaveAsync();
+
                 return OperationResult<UserLoginResponseDTO>.Success(new UserLoginResponseDTO()
                 {
                     Token = tokenResult.Token!,
-                    Email = authenticatedUser.Email,
-                    FullName = authenticatedUser.FullName,
+
                 });
+            }
+            catch (ValidationException ve)
+            {
+                throw ve;
             }
             catch (Exception exception)
             {
                 _unitOfWork.Rollback();
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserLogin, input.Email);
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.ErrorDuringUserLogin, request.Email);
                 return OperationResult.Failure(
                     new ExistEmailException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
+                    .WithMessage(defaultMessage, localizedMessage)
                     .WithInnerCustomException(exception)
                     );
             }

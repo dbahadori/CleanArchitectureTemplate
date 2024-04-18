@@ -6,87 +6,71 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq.Expressions;
 using CleanArchitectureTemplate.Resources;
+using Ticketing.Domain.Interfaces.Repositories;
+using CleanArchitectureTemplate.Domain.DTO;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 {
-    public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : class
+    public abstract class BaseRepository<TEntity, TKey> :
+        IReadableRepository<TEntity, TKey>,
+        IPaginatedRepository<TEntity>,
+        IExistenceRepository<TEntity, TKey>,
+        IWritableRepository<TEntity, TKey>,
+        IDisposable
+        where TEntity : class
     {
-        protected readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _dbContext;
         private readonly DbSet<TEntity> _entitySet;
 
         public BaseRepository(ApplicationDbContext context)
         {
-            _context = context;
-            _entitySet = _context.Set<TEntity>();
+            _dbContext = context;
+            _entitySet = _dbContext.Set<TEntity>();
         }
 
-        public virtual async Task<bool> AddAsync(TEntity entity)
-        {
-            try
-            {
-                await _entitySet.AddAsync(entity);
 
-                return true;
-            }
-            catch (Exception exception)
+        #region Private Methods
+
+        private void ApplyCondition(ref IQueryable<TEntity> query, Expression<Func<TEntity, bool>>? condition)
+        {
+            if (condition != null)
             {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToAddEntity, typeof(TEntity).Name);
-                throw new RepositoryException()
+                query = query.Where(condition);
+            }
+        }
+
+        private void ApplyOrderBy(ref IQueryable<TEntity> query, Expression<Func<TEntity, object>>? orderBy, bool orderByDescending)
+        {
+            if (orderBy != null)
+            {
+                query = orderByDescending ? query.OrderByDescending(orderBy) : query.OrderBy(orderBy);
+            }
+        }
+
+        private IQueryable<TEntity> ApplyPagination(IQueryable<TEntity> query, int pageSize, int pageIndex)
+        {
+            if (pageSize <= 0 || pageIndex <= 0)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.InvalidPageSizePageNumber);
+                throw new InvalidPageSizePageNumberException()
                     .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
-                    .WithInnerCustomException(exception);
-
+                    .WithDeveloperDetail(defaultMessage);
             }
+
+            return query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        public virtual async Task<bool> DeleteAsync(TKey key)
+        #endregion
+
+
+        #region Public Methods
+
+        public virtual async Task<TEntity?> GetByIdAsync(TKey id)
         {
 
             try
             {
-                var entityToRemove = await _entitySet.FindAsync(key);
-                if (entityToRemove != null)
-                    _entitySet.Remove(entityToRemove);
-                else
-                    throw new NotFoundException();
-                return true;
-            }
-            catch (Exception exception)
-            {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
-                throw new RepositoryException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
-                    .WithInnerCustomException(exception);
-            }
-        }
-        public virtual async Task<bool> DeleteAsync(TEntity entity)
-        {
-
-            try
-            {
-                if (entity != null)
-                    _entitySet.Remove(entity);
-                else
-                    throw new ArgumentNullException();
-                return true;
-            }
-            catch (Exception exception)
-            {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
-                throw new RepositoryException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
-                    .WithInnerCustomException(exception);
-            }
-        }
-
-        public virtual async Task<TEntity> GetByIdAsync(TKey Tkey)
-        {
-
-            try
-            {
-                var entity = await _entitySet.FindAsync(Tkey);
+                var entity = await _entitySet.FindAsync(id);
                 return entity;
 
             }
@@ -120,12 +104,78 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(
-            Expression<Func<TEntity, bool>>? condition = null,
-            Expression<Func<TEntity, object>>? orderBy = null,
-            int? pageSize = null,
-            int? pageIndex = null,
-            bool orderByDescending = false)
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
+        {
+            try
+            {
+                var addedEntity = await _entitySet.AddAsync(entity);
+                return addedEntity.Entity;
+            }
+            catch (Exception exception)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToAddEntity, typeof(TEntity).Name);
+                throw new RepositoryException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception);
+
+            }
+        }
+        public virtual TEntity Add(TEntity entity)
+        {
+            try
+            {
+                var addedEntity = _entitySet.Add(entity);
+                return addedEntity.Entity;
+
+            }
+            catch (Exception exception)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToAddEntity, typeof(TEntity).Name);
+                throw new RepositoryException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception);
+
+            }
+        }
+        public virtual async Task DeleteAsync(TKey key)
+        {
+            try
+            {
+                var entity = await _entitySet.FindAsync(key);
+                if (entity != null)
+                {
+                    _entitySet.Remove(entity);
+                }
+                else
+                {
+                    var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.EntityNotFound, typeof(TEntity).Name, "Id", key);
+                    throw new EntityNotFoundException()
+                        .WithUserFriendlyMessage(localizedMessage)
+                        .WithDeveloperDetail(defaultMessage);
+                }
+
+            }
+            catch (Exception exception) when (exception is InvalidOperationException || exception is EntityNotFoundException)
+            {
+                throw;
+            }
+            catch (Exception exception)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToDeleteEntity, typeof(TEntity).Name);
+                throw new RepositoryException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception);
+            }
+        }
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
+           Expression<Func<TEntity, bool>>? condition = null,
+           Expression<Func<TEntity, object>>? orderBy = null,
+           bool orderByDescending = false,
+           CancellationToken cancellationToken = default(CancellationToken)
+)
         {
             try
             {
@@ -133,18 +183,63 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
                 ApplyCondition(ref query, condition);
                 ApplyOrderBy(ref query, orderBy, orderByDescending);
 
-                IEnumerable<TEntity> resultModels;
+                var result = await query.ToListAsync(cancellationToken: cancellationToken);
 
-                if (pageSize.HasValue && pageSize.Value > 0 && pageIndex.HasValue && pageIndex.Value > 0)
+                return result;
+            }
+            catch (Exception exception)
+            {
+                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToGetAllEntities);
+                throw new RepositoryException()
+                    .WithUserFriendlyMessage(localizedMessage)
+                    .WithDeveloperDetail(defaultMessage)
+                    .WithInnerCustomException(exception);
+            }
+        }
+        public virtual async Task<PagedResult<TEntity>> GetAllPagedAsync(
+            Expression<Func<TEntity, bool>>? condition = null,
+            Expression<Func<TEntity, object>>? orderBy = null,
+            int? pageSize = null,
+            int? pageNumber = null,
+            bool orderByDescending = false,
+            CancellationToken cancellationToken = default(CancellationToken)
+            )
+        {
+            try
+            {
+                var query = _entitySet.AsQueryable();
+
+                ApplyCondition(ref query, condition);
+                ApplyOrderBy(ref query, orderBy, orderByDescending);
+
+                IEnumerable<TEntity> result;
+                int totalCount = 0;
+
+                if (pageSize.HasValue && pageSize.Value > 0 && pageNumber.HasValue && pageNumber.Value > 0)
                 {
-                     resultModels = await ApplyPagination(query, pageSize.Value, pageIndex.Value).ToListAsync();
+                    var paginationQuery = ApplyPagination(query, pageSize.Value, pageNumber.Value);
+                    var paginationResult = await paginationQuery.ToListAsync();
+                    result = paginationResult;
                 }
                 else
                 {
-                    resultModels = await query.ToListAsync();
+                    var resultList = await query.ToListAsync();
+                    result = resultList.Take(7);
                 }
+                totalCount = await query.CountAsync();
+                var pagedResult = new PagedResult<TEntity>
+                {
+                    Items = result,
+                    Paging = new PaginationResponseMetadata
+                    {
+                        TotalCount = totalCount,
+                        PageNumber = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1,
+                        PageSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 7,
+                        TotalPages = (int)Math.Ceiling((double)totalCount / (pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 1))
+                    }
+                };
 
-                return resultModels;
+                return pagedResult;
             }
             catch (Exception exception)
             {
@@ -156,62 +251,25 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
             }
         }
 
-        private async Task<TEntity?> GetEntityByIdAsync(TKey Tkey)
+        public virtual async Task<bool> ExistAsync(TKey id, CancellationToken cancellationToken)
         {
-            var entityName = typeof(TEntity).Name;
-
-            try
-            {
-                var parameter = Expression.Parameter(typeof(TEntity), "x");
-                var property = Expression.Property(parameter, "Id"); // "Id" is the primary key property name, adjust it if needed
-                var keySelector = Expression.Lambda<Func<TEntity, TKey>>(property, parameter);
-                var entity = await _entitySet.AsNoTracking().FirstOrDefaultAsync(x => keySelector.Compile()(x)!.Equals(Tkey));
-                return entity;
-            }
-            catch (Exception exception)
-            {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.FailedToGetEntity, entityName);
-                throw new RepositoryException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage)
-                    .WithInnerCustomException(exception);
-            }
-
+            var entity = await _entitySet.FindAsync(id);
+            return entity != null;
         }
 
-        private void ApplyCondition(ref IQueryable<TEntity> query, Expression<Func<TEntity, bool>>? condition)
+        public virtual async Task<bool> ExistsWithConditionsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            if (condition != null)
-            {
-                query = query.Where(condition);
-            }
+            return await _entitySet.AnyAsync(predicate, cancellationToken);
         }
-
-        private void ApplyOrderBy(ref IQueryable<TEntity> query, Expression<Func<TEntity, object>>? orderBy, bool orderByDescending)
-        {
-            if (orderBy != null)
-            {
-                query = orderByDescending ? query.OrderByDescending(orderBy) : query.OrderBy(orderBy);
-            }
-        }
-
-        private IQueryable<TEntity> ApplyPagination(IQueryable<TEntity> query, int pageSize, int pageIndex)
-        {
-            if (pageSize <= 0 || pageIndex <= 0)
-            {
-                var (defaultMessage, localizedMessage) = ResourceHelper.GetGeneralErrorMessages(em => ErrorMessages.InvalidPageSizePageNumber);
-                throw new InvalidPageSizePageNumberException()
-                    .WithUserFriendlyMessage(localizedMessage)
-                    .WithDeveloperDetail(defaultMessage);
-            }
-
-            return query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-        }
-
         public void Dispose()
         {
-            _context.Dispose();
+            _dbContext.Dispose();
         }
+
+        #endregion
+
+
+
 
     }
 }

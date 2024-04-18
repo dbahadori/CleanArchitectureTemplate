@@ -57,14 +57,14 @@ namespace CleanArchitectureTemplate.Presentation.Controllers.V1.Common
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterRequestDTO request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequestDTO request, CancellationToken cancellationToken)
         {
             // Validation
             _modelValidator.ValidateAndThrow(request);
             try
             {
                 // Register Process
-                var registerResult = await _userRegisterUseCase.RegisterAsync(request);
+                var registerResult = await _userRegisterUseCase.RegisterAsync(request, cancellationToken);
                 if (!registerResult.IsSuccessful)
                     throw registerResult.Exception!;
 
